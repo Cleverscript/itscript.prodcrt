@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "remote XDebug",
+            "type": "php",
+            "request": "launch",
+            "hostname": "192.168.0.100",
+            "port": 9003,
+            "pathMappings": {
+              "/home/bitrix/ext_www/lormax.admin65.fvds.ru": "${workspaceRoot}"
+            }
+        },
+    ]
+}

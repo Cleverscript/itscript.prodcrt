@@ -1,0 +1,20 @@
+<?php
+$MESS['ITSERW_LOTOSWCR_TITLE'] = 'Редактировать заявку';
+$MESS['ITSERW_LOTOSWCR_PAGE_TITLE'] = 'Редактировать';
+$MESS['ITSERW_LOTOSWCR_INCLUDE_MODULE_ERROR'] = 'Ошибка - не установлен модуль #MODULE_ID#!';
+$MESS['ITSERW_LOTOSWCR_ADD'] = 'Добавить';
+$MESS['ITSERW_LOTOSWCR_EDIT'] = 'Редактировать';
+$MESS['ITSERW_LOTOSWCR_FORM_EDIT_COPY'] = 'Копировать';
+$MESS['ITSERW_LOTOSWCR_DELETE'] = 'Удалить';
+$MESS['ITSERW_LOTOSWCR_DELETE_ALERT'] = 'Удалить этот элемент?';
+$MESS['ITSERW_LOTOSWCR_TITLE_ACTIVE'] = 'Активность';
+$MESS['ITSERW_LOTOSWCR_LIST'] = 'Список заявок';
+$MESS['ITSERW_LOTOSWCR_TITLE_ORDER_ID'] = 'ID заказа';
+$MESS['ITSERW_LOTOSWCR_TITLE_USER_ID'] = 'ID покупателя';
+$MESS['ITSERW_LOTOSWCR_FIELD_TITLE_CITY'] = 'Город';
+$MESS['ITSERW_LOTOSWCR_FIELD_TITLE_MODEL'] = 'Модель';
+$MESS['ITSERW_LOTOSWCR_FIELD_TITLE_FIO'] = 'ФИО';
+$MESS['ITSERW_LOTOSWCR_FIELD_TITLE_EMAIL'] = 'Email';
+$MESS['ITSERW_LOTOSWCR_FORM_EDIT_ERROR_SAVE'] = 'Ошибка сохранения';
+$MESS[''] = '';
+$MESS[''] = '';
