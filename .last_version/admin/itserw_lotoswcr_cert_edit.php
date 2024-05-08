@@ -10,6 +10,7 @@ use Bitrix\Main\UI\PageNavigation;
 use Bitrix\Main\Type\DateTime;
 use Bitrix\Main\Engine\CurrentUser;
 use Itserw\Lotoswcr\CertTable;
+use Itserw\Lotoswcr\Util;
 
 $module_id = "itserw.lotoswcr";
 
@@ -64,7 +65,8 @@ $allFields = [
     'CITY' => 'string',
     'MODEL' => 'string',
     'FIO' => 'string',
-    'EMAIL' => 'string'
+    'EMAIL' => 'string',
+    'FILE_ID' => 'file',
 ];
 
 if (check_bitrix_sessid()
@@ -85,11 +87,13 @@ if (check_bitrix_sessid()
         'ACTIVE' => $rawData->get('ACTIVE'),
         'DATE_INSERT' => new DateTime(),
         'ORDER_DATE_INSERT' => new DateTime(),
-        'USER_ID' => CurrentUser::get()->getId(),
-        'ORDER_ID' => CurrentUser::get()->getId(),
+        'USER_ID' => $rawData->get('USER_ID'),
+        'ORDER_ID' => $rawData->get('ORDER_ID'),
+        'FIO' => trim($rawData->get('FIO')),
         'CITY' => trim($rawData->get('CITY')),
         'MODEL' => trim($rawData->get('MODEL')),
-        'EMAIL' => trim($rawData->get('EMAIL'))
+        'EMAIL' => trim($rawData->get('EMAIL')),
+        'FILE_ID' => $rawData->get('FILE_ID')
     ];
 
     // is add new
@@ -98,9 +102,30 @@ if (check_bitrix_sessid()
         //$fields['USER_ID'] = CurrentUser::get()->getId();
     }
 
+    // File upload
+    if (isset($_FILES["FILE"]) && $_FILES["FILE"]['size']>0) {
+
+        $del = $_POST["FILE_del"] ??= 'N';
+
+        if ($fid = Util::uploadFile($_FILES["FILE"], $del)) {
+            $fields['FILE_ID'] = $fid;
+        } else {
+            unset($fields['FILE_ID']);
+            unset($allFields['FILE_ID']);
+        }
+    } elseif (isset($_POST["FILE"]) && intval($_POST["FILE"])>0) {
+        $fields['FILE_ID'] = intval($_POST["FILE"]);
+    }
+
     if ($eventID == 0 || $copy) {
+
         $result = CertTable::add($fields);
+
     } else {
+        //var_dump($fields);
+        //exit();
+        unset($fields['USER_ID']);
+        unset($fields['ORDER_ID']);
         $result = CertTable::update($eventID, $fields);
     }
     if (!$result->isSuccess()) {
@@ -174,7 +199,7 @@ if (!$readOnly && $eventID > 0) {
             'WARNING' => 'Y',
         );
     }
-    $formIterator = QnaTable::getList(
+    $formIterator = CertTable::getList(
         [
             'filter' => ['ID' => $eventID],
             'select'=>['*']
@@ -255,7 +280,22 @@ if (!$eventID) {
       </tr>
       <?
     $tabControl->EndCustomField('ORDER_ID', '');
+
+    $tabControl->BeginCustomField('USER_ID', Loc::getMessage("ITSERW_LOTOSWCR_TITLE_USER_ID"), true);
+    ?>
+      <tr id="tr_USER_ID">
+          <td class="adm-detail-content-cell-l"><?=$tabControl->GetCustomLabelHTML();?></td>
+          <td class="adm-detail-content-cell-r">
+                <input type="text" name="USER_ID" id="USER_ID" value="<?=$fields['USER_ID'];?>">
+          </td>
+      </tr>
+      <?
+    $tabControl->EndCustomField('USER_ID', '');
 }
+
+//var_dump($event);
+//var_dump($allFields);
+//echo "<br/><br/><br/>";
 
 foreach ($allFields as $fld => $type) {
     $tabControl->BeginCustomField($fld, Loc::getMessage("ITSERW_LOTOSWCR_FIELD_TITLE_" . $fld), false);
@@ -264,19 +304,32 @@ foreach ($allFields as $fld => $type) {
         <td class="adm-detail-content-cell-l"><?=$tabControl->GetCustomLabelHTML(); ?></td>
         <td class="adm-detail-content-cell-r">
             <? if ($type=='string') { ?>
-                <input type="text" size='35' name="<?=$fld?>" id="<?=$fld?>" value="<?=$event[$fld]?>">
+                <input type="text" size='35' name="<?=$fld?>" id="<?=$fld?>" value="<?=$event[$fld]??$fields[$fld]?>">
             <? } elseif ($type=='int') { ?>
-            <input type="int" min="0" size='35' name="<?=$fld?>" id="<?=$fld?>" value="<?=$event[$fld]?>">
+                <input type="int" min="0" size='35' name="<?=$fld?>" id="<?=$fld?>" value="<?=$event[$fld]??$fields[$fld]?>">
             <? } elseif ($type=='text') { ?>
+                <textarea cols="60" rows="5" name="<?=$fld?>" id="<?=$fld?>"><?=$event[$fld]??$fields[$fld]?></textarea>
+            <? } elseif ($type=='file') { ?>
 
-                <?php if ($fld=='QUESTION' && $eventID):?>
-                    <textarea cols="60" rows="5" name="" disabled><?=$event[$fld]??$fields[$fld]?></textarea>
-                    <input type="hidden" name="<?=$fld?>" id="<?=$fld?>" value="<?=$event[$fld]?>">
+                <?php if ($fid = $event[$fld]??$fields[$fld]): ?>
+                    <?php
+                    $file = CFile::GetFileArray($fid);
+                    //var_dump($file);
+                    //var_dump(CFile::GetByID($fid));
+                    ?>
+                    <? if(str_contains(mime_content_type($_SERVER['DOCUMENT_ROOT'] . $file['SRC']), 'image')): ?>
+                        <?=CFile::ShowImage($fid, 200, 200, "border=0", "", true);?>
+                    <?php else: ?>
+                        <a href="<?=$file['SRC'];?>" target="blank"><?=$file['ORIGINAL_NAME'];?></a>
+                    <?php endif;?>    
+                    <br/>
+                    <?=CFile::InputFile("FILE", 20, $fid); ?>
+                    <input type="hidden" name="FILE" value="<?=$fid;?>"/>
                 <?php else: ?>
-                    <textarea cols="60" rows="5" name="<?=$fld?>" id="<?=$fld?>"><?=$event[$fld]??$fields[$fld]?></textarea>
-                <?php endif;?>
+                    <?=CFile::InputFile("FILE", 20, null); ?>
+                <?php endif; ?>
+                
 
-            
             <? } elseif ($type=='date') { ?>
                 <?=CAdminCalendar::CalendarDate($fld, $event[$fld], 19, true);?>
             <? } ?>
@@ -285,7 +338,6 @@ foreach ($allFields as $fld => $type) {
     <?
     $tabControl->EndCustomField($fld, '');
 }
-
 
 $tabControl->Buttons(array('disabled' => $readOnly, 'back_url' => $listUrl));
 $tabControl->Show();

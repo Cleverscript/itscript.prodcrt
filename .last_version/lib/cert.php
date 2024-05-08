@@ -30,6 +30,11 @@ class CertTable extends DataManager
 				'title' => Loc::getMessage('CERT_TABLE_TITLE_USER_ID'),
 				'required' => true,
 				'format' => '/^[0-9]{1,}$/',
+				'validation' => function () {
+					return [
+						new RegExp('/^[0-9]{1,}$/')
+					];
+				},
             ]),
 
 			(new Reference(
@@ -43,6 +48,11 @@ class CertTable extends DataManager
 				'title' => Loc::getMessage('CERT_TABLE_TITLE_ORDER_ID'),
 				/*'required' => true,*/
 				'format' => '/^[0-9]{1,}$/',
+				'validation' => function () {
+					return [
+						new RegExp('/^[0-9]{1,}$/')
+					];
+				},
             ]),
 
 			(new Reference(
@@ -54,6 +64,28 @@ class CertTable extends DataManager
             new BooleanField('ACTIVE', [
 				'title' => Loc::getMessage('CERT_TABLE_TITLE_ACTIVE'),
                 'values' => array('N', 'Y')
+            ]),
+
+			new StringField('FIO', [
+				'title' => Loc::getMessage('CERT_TABLE_TITLE_FIO'),
+                'required' => true,
+				'size' => 256,
+				'validation' => function () {
+					return [
+						new Length(null, 256),
+					];
+				},
+            ]),
+
+			new StringField('EMAIL', [
+				'title' => Loc::getMessage('CERT_TABLE_TITLE_EMAIL'),
+                'required' => true,
+				'size' => 256,
+				'validation' => function () {
+					return [
+						new Length(null, 256),
+					];
+				},
             ]),
 
 			new StringField('CITY', [
@@ -76,6 +108,11 @@ class CertTable extends DataManager
 						new Length(null, 256),
 					];
 				},
+            ]),
+
+			new IntegerField('FILE_ID', [
+				'title' => Loc::getMessage('CERT_TABLE_TITLE_FILE_ID'),
+				'format' => '/^[0-9]{1,}$/',
             ]),
 
 			new DatetimeField('DATE_INSERT', [

@@ -1,5 +1,5 @@
 <?php
-namespace Itscript\Qna;
+namespace Itserw\Lotoswcr;
 
 use Bitrix\Main;
 use Bitrix\Main\Config\Option;
@@ -8,7 +8,7 @@ IncludeModuleLangFile(__FILE__);
 
 class Util
 {
-    const MODULE_ID = "itscript.qna";
+    const MODULE_ID = "itscript.lotoswcr";
 
     /**
      * Function print var
@@ -46,6 +46,20 @@ class Util
     public static function clearQuestionText($s) {
         $s = strip_tags($s);
         return preg_replace('#\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#', '', $s);
+    }
+
+
+    public static function uploadFile(array $file, string $del = 'N'): ?int
+    {
+        return \CFile::SaveFile([
+            "name" => $file["name"],
+            "size" => $file["size"],
+            "tmp_name" => $file["tmp_name"],
+            "type" => $file["type"],
+            "old_file" => "",
+            "del" => $del,
+            "MODULE_ID" => "itserw.lotoswcr"
+        ], "/itserw_lotoswcr_cert/");
     }
 
 }

@@ -287,8 +287,8 @@ if ($usePageNavigation) {
 }
 $onlyDel = false;
 $yesNo = [
-    Loc::getMessage("ITSERW_LOTOSWCR_TITLE_NO"),
-    Loc::getMessage("ITSERW_LOTOSWCR_TITLE_YES"),
+    'N' => Loc::getMessage("ITSERW_LOTOSWCR_TITLE_NO"),
+    'Y' => Loc::getMessage("ITSERW_LOTOSWCR_TITLE_YES"),
 ];
 CTimeZone::Disable();
 $adminList->SetNavigationParams($formIterator, array("BASE_LINK" => $selfFolderUrl . "itserw_lotoswcr_cert_list.php"));
