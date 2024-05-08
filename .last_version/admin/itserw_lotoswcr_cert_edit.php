@@ -126,8 +126,18 @@ if (check_bitrix_sessid()
         //exit();
         unset($fields['USER_ID']);
         unset($fields['ORDER_ID']);
+
         $result = CertTable::update($eventID, $fields);
+
+        // Registering the module event handler
+        foreach (GetModuleEvents($module_id, 'OnAfterCertApply', true) as $arEvent) {
+            ExecuteModuleEventEx($arEvent, [
+                $eventID, 
+                $fields
+            ]);
+        }
     }
+
     if (!$result->isSuccess()) {
         $errors = $result->getErrorMessages();
     } else {
@@ -141,6 +151,7 @@ if (check_bitrix_sessid()
             LocalRedirect($listUrl);
         }
     }
+
     unset($result, $rawData);
 }
 $APPLICATION->SetTitle(
@@ -314,10 +325,12 @@ foreach ($allFields as $fld => $type) {
                 <?php if ($fid = $event[$fld]??$fields[$fld]): ?>
                     <?php
                     $file = CFile::GetFileArray($fid);
+                    $mimeType = mime_content_type($_SERVER['DOCUMENT_ROOT'] . $file['SRC']);
+                    //var_dump($mimeType);
                     //var_dump($file);
                     //var_dump(CFile::GetByID($fid));
                     ?>
-                    <? if(str_contains(mime_content_type($_SERVER['DOCUMENT_ROOT'] . $file['SRC']), 'image')): ?>
+                    <? if(str_contains($mimeType, 'image')): ?>
                         <?=CFile::ShowImage($fid, 200, 200, "border=0", "", true);?>
                     <?php else: ?>
                         <a href="<?=$file['SRC'];?>" target="blank"><?=$file['ORIGINAL_NAME'];?></a>

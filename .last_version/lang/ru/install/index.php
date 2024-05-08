@@ -15,3 +15,10 @@ $MESS["ITSERW_LOTOSWCR_FULL"] = "Полный доступ";
 
 $MESS["ITSERW_LOTOSWCR_CHECK_ISS_MODULE_EXT_ERROR"] = "Ошибка - не установлен модуль #MODULE_ID#!";
 $MESS["ITSERW_LOTOSWCR_CHECK_ISS_MODULE_EXT_ERROR_ALT"] = "Для работы модуля требуется наличие в системе установленного модуля #MODULE_ID#.";
+
+$MESS["ITSERW_LOTOSWCR_APPLY_CERT"] = "Зарегистрирован гарантийный сертификат";
+$MESS["ITSERW_LOTOSWCR_APPLY_CERT_DESCRIPTION"] = "#ID# - #MODEL# - #FIO# - #EMAIL# -";
+$MESS["ITSERW_LOTOSWCR_APPLY_CERT_SUBJECT"] = "Зарегистрирован гарантийный сертификат";
+$MESS["ITSERW_LOTOSWCR_APPLY_CERT_MESSAGE"] = "#FIO#, для модели #MODEL# зарегистрирован сертификат с #ID#";
+$MESS[""] = "";
+$MESS[""] = "";

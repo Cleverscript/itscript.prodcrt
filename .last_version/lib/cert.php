@@ -66,6 +66,11 @@ class CertTable extends DataManager
                 'values' => array('N', 'Y')
             ]),
 
+            new BooleanField('SENDED', [
+				'title' => Loc::getMessage('CERT_TABLE_TITLE_SENDED'),
+                'values' => array('N', 'Y')
+            ]),
+
 			new StringField('FIO', [
 				'title' => Loc::getMessage('CERT_TABLE_TITLE_FIO'),
                 'required' => true,

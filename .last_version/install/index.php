@@ -129,8 +129,23 @@ class itserw_lotoswcr extends CModule
      */
     function InstallEvents() {
 
-        $eventManager = EventManager::getInstance();
-        $eventManager->registerEventHandler('main', 'OnBuildGlobalMenu', $this->MODULE_ID, '\Itserw\Lotoswcr\Menu', 'adminOnBuildGlobalMenu', 9999);
+        EventManager::getInstance()->registerEventHandler(
+            'main', 
+            'OnBuildGlobalMenu', 
+            $this->MODULE_ID, 
+            '\Itserw\Lotoswcr\Menu', 
+            'adminOnBuildGlobalMenu', 
+            9999
+        );
+    
+        EventManager::getInstance()->registerEventHandler(
+            $this->MODULE_ID, 
+            "OnAfterCertApply", 
+            $this->MODULE_ID, 
+            "\Itserw\Lotoswcr\Events", 
+            "OnAfterCertApplyHandler", 
+            "100"
+        );
     }
 
     /**
@@ -140,7 +155,54 @@ class itserw_lotoswcr extends CModule
 
         $eventManager = EventManager::getInstance();
         $eventManager->unRegisterEventHandler('main', 'OnBuildGlobalMenu', $this->MODULE_ID, '\Itserw\Lotoswcr\Menu', 'adminOnBuildGlobalMenu');
+        $eventManager->unRegisterEventHandler($this->MODULE_ID, 'OnAfterCertApply', $this->MODULE_ID, '\Itserw\Lotoswcr\Events', 'OnAfterCertApplyHandler');
     
+    }
+
+
+    public function InstallEventSend() {
+
+        $eventName = "ITSERW_LOTOSWCR_APPLY_CERT";
+
+        $obEventType = new CEventType;
+        $obEventType->Add([
+            "EVENT_TYPE" => 'email',
+            "EVENT_NAME"    => $eventName ,
+            "NAME"          => Loc::getMessage("ITSERW_LOTOSWCR_APPLY_CERT"),
+            "LID"           => "ru",
+            "DESCRIPTION"   => Loc::getMessage("ITSERW_LOTOSWCR_APPLY_CERT_DESCRIPTION")
+        ]);
+
+        $oEventMessage = new CEventMessage();
+        $arFields = [
+            "ACTIVE" => "Y",
+            "EVENT_NAME" => $eventName,
+            "LID" => array("s1"),
+            "LANGUAGE_ID" => "ru",
+            "EMAIL_FROM" => "#DEFAULT_EMAIL_FROM#",
+            "EMAIL_TO" => "#EMAIL#",
+            "SUBJECT" => Loc::getMessage("ITSERW_LOTOSWCR_APPLY_CERT_SUBJECT"),
+            "MESSAGE" => Loc::getMessage("ITSERW_LOTOSWCR_APPLY_CERT_MESSAGE"),
+            "BODY_TYPE" => "html"
+        ];
+        
+        $id = $oEventMessage->Add($arFields);
+
+        Option::set($this->MODULE_ID, 'ITSERW_LOTOSWCR_EVENT_TYPE', $eventName);
+        Option::set($this->MODULE_ID, 'ITSERW_LOTOSWCR_EVENT_TYPE_EMAIL_TEMPLATE_ID', $id);
+
+    }
+
+
+    public function UnInstallEventSend() {
+        $eventName = "ITSERW_LOTOSWCR_APPLY_CERT";
+
+        $obEventType = new CEventType;
+        $obEventType->Delete($eventName);
+
+        $oEventMessage = new CEventMessage();
+        $oEventMessage->Delete(Option::get($this->MODULE_ID, 'ITSERW_LOTOSWCR_EVENT_TYPE_EMAIL_TEMPLATE_ID'));
+
     }
 
 
@@ -211,7 +273,9 @@ class itserw_lotoswcr extends CModule
             return false;
         }
 
-        //$this->InstallEvents();
+        $this->InstallEvents();
+        $this->InstallEventSend();
+
         //$this->InstallAgents();itscript_answers_list.php
 
         return true;
@@ -220,9 +284,10 @@ class itserw_lotoswcr extends CModule
     function DoUninstall() {
 
         ModuleManager::unRegisterModule($this->MODULE_ID);
-        //$this->UnInstallEvents();
+        $this->UnInstallEvents();
         $this->UnInstallFiles();
         $this->UninstallDB();
+        $this->UnInstallEventSend();
         //$this->UnInstallAgents();
 
         return true;

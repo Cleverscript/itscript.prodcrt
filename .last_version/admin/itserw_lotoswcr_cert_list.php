@@ -64,6 +64,25 @@ $filterFields = array(
         "type" => "text",
         "filterable" => "%"
     ),
+    array(
+        "id" => "EMAIL",
+        "name" => Loc::getMessage("ITSERW_LOTOSWCR_TITLE_EMAIL"),
+        "type" => "text",
+        "filterable" => "="
+    ),
+    array(
+        "id" => "FIO",
+        "name" => Loc::getMessage("ITSERW_LOTOSWCR_TITLE_FIO"),
+        "type" => "text",
+        "filterable" => "%"
+    ),
+    array(
+        "id" => "SENDED",
+        "name" => Loc::getMessage("ITSERW_LOTOSWCR_TITLE_SENDED"),
+        "type" => "select",
+        "value" => ["Y" => "Y", "N" => "N"],
+        "filterable" => "="
+    ),
 );
 
 $filter = array();
