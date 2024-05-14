@@ -10,11 +10,11 @@ $arComponentDescription = array(
 	"PATH" => array(
 		"ID" => "Itscript",
 		"CHILD" => array(
-			"ID" => "question",
+			"ID" => "wcr",
 			"NAME" => GetMessage("T_QUESTION"),
 			"SORT" => 10,
 			"CHILD" => array(
-				"ID" => "question_cmpx",
+				"ID" => "wcr_cmpx",
 			),
 		),
 	),

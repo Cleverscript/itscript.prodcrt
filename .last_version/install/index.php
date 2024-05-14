@@ -102,11 +102,11 @@ class itserw_lotoswcr extends CModule
             return false;
         }
 
-        if (!CopyDirFiles(
+        /*if (!CopyDirFiles(
             $this->GetPath() . '/install/components', 
             $_SERVER["DOCUMENT_ROOT"]."/bitrix/components/", true, true)) {
             return false;
-        }
+        }*/
 
         return true;
     }
@@ -120,7 +120,9 @@ class itserw_lotoswcr extends CModule
             $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin/itserw_lotoswcr_cert_edit.php"
         );
 
-        //Directory::deleteDirectory($_SERVER["DOCUMENT_ROOT"]."/bitrix/components/{$this->getVendor()}");
+        /*Directory::deleteDirectory(
+            $_SERVER["DOCUMENT_ROOT"] . '/bitrix/components/' . $this->getVendor() . '/lotoswcr.form'
+        );*/
 
     }
 

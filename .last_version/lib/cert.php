@@ -2,6 +2,7 @@
 namespace Itserw\Lotoswcr;
 
 use Bitrix\Main\UserTable;
+use Bitrix\Main\OrderTable;
 use Bitrix\Main\Type\Date;
 use Bitrix\Main\Type\DateTime;
 use Bitrix\Main\Localization\Loc;
@@ -26,6 +27,12 @@ class CertTable extends DataManager
 				'autocomplete' => true
             ]),
 
+            new BooleanField('ACTIVE', [
+				'title' => Loc::getMessage('CERT_TABLE_TITLE_ACTIVE'),
+                'values' => array('N', 'Y'),
+				'default_value' => 'N'
+            ]),
+
 			new IntegerField('USER_ID', [
 				'title' => Loc::getMessage('CERT_TABLE_TITLE_USER_ID'),
 				'required' => true,
@@ -46,7 +53,7 @@ class CertTable extends DataManager
 
 			new IntegerField('ORDER_ID', [
 				'title' => Loc::getMessage('CERT_TABLE_TITLE_ORDER_ID'),
-				/*'required' => true,*/
+				'required' => true,
 				'format' => '/^[0-9]{1,}$/',
 				'validation' => function () {
 					return [
@@ -61,9 +68,16 @@ class CertTable extends DataManager
 					Join::on('this.ORDER_ID', 'ref.ID')
 			))->configureJoinType('inner'),
 
-            new BooleanField('ACTIVE', [
-				'title' => Loc::getMessage('CERT_TABLE_TITLE_ACTIVE'),
-                'values' => array('N', 'Y')
+
+			new IntegerField('PRODUCT_ID', [
+				'title' => Loc::getMessage('CERT_TABLE_TITLE_PRODUCT_ID'),
+				'required' => true,
+				'format' => '/^[0-9]{1,}$/',
+				'validation' => function () {
+					return [
+						new RegExp('/^[0-9]{1,}$/')
+					];
+				},
             ]),
 
             new BooleanField('SENDED', [
@@ -95,7 +109,7 @@ class CertTable extends DataManager
 
 			new StringField('CITY', [
 				'title' => Loc::getMessage('CERT_TABLE_TITLE_CITY'),
-                'required' => true,
+                //'required' => true,
 				'size' => 256,
 				'validation' => function () {
 					return [

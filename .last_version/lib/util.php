@@ -3,12 +3,30 @@ namespace Itserw\Lotoswcr;
 
 use Bitrix\Main;
 use Bitrix\Main\Config\Option;
+use Itserw\Lotoswcr\CertTable;
 
 IncludeModuleLangFile(__FILE__);
 
 class Util
 {
-    const MODULE_ID = "itscript.lotoswcr";
+    const MODULE_ID = "itserw.lotoswcr";
+
+    /**
+     * Check exists product id from order in requests
+     * @param int $orderId, int $productId
+     */
+    public static function exRequestCertByOrder(int $orderId, int $productId) : bool
+    {
+        $row = CertTable::getList(array(
+            'select' => [
+                'ID', 
+            ],
+            'filter' => array('=ORDER_ID' => $orderId, '=PRODUCT_ID' => $productId),
+            'count_total' => true
+        ))->fetchAll();
+        
+        return count($row)>0;
+    }
 
     /**
      * Function print var
@@ -32,22 +50,6 @@ class Util
 
         echo "</pre><br/>";
     }
-
-	public static function writeSysLog($auditTypeId, $itemId, $description, $severity = 'DEBUG') {
-		\CEventLog::Add([
-			"SEVERITY" => $severity,
-			"AUDIT_TYPE_ID" => $auditTypeId,
-			"MODULE_ID" => self::MODULE_ID,
-			"ITEM_ID" => $itemId,
-			"DESCRIPTION" => $description,
-		]);
-	}
-
-    public static function clearQuestionText($s) {
-        $s = strip_tags($s);
-        return preg_replace('#\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#', '', $s);
-    }
-
 
     public static function uploadFile(array $file, string $del = 'N'): ?int
     {

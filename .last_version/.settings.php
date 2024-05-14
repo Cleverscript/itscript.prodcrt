@@ -2,7 +2,7 @@
 return [
 	'controllers' => [
 		'value' => [
-			'defaultNamespace' => '\\Itscript\\Qna\\Controller',
+			'defaultNamespace' => '\\Itserw\\Lotoswcr\\Controller',
 		],
 		'readonly' => true,
 	]

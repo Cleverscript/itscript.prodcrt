@@ -9,7 +9,7 @@ use Bitrix\Main\Engine\CurrentUser;
 use Itserw\Lotoswcr\CertTable;
 use Itserw\Lotoswcr\Util;
 
-Loader::includeModule('itscript.lotoswcr');
+Loader::includeModule('itserw.lotoswcr');
 
 class Lotoswcr extends CBitrixComponent
 {
@@ -31,9 +31,12 @@ class Lotoswcr extends CBitrixComponent
 
 	public function executeComponent() {
 
-		if ($this->startResultCache(false, array(($this->arParams["CACHE_GROUPS"]==="N"? false: CurrentUser::get()->getUserGroups())))) {
+		//if ($this->startResultCache(false, array(($this->arParams["CACHE_GROUPS"]==="N"? false: CurrentUser::get()->getUserGroups())))) {
 	        
             // add assets
+
+            //var_dump($this->getTemplateName());
+
             Asset::getInstance()->addCss($this->GetPath() . '/templates/' . $this->getTemplateName() . '/style.css');
             Asset::getInstance()->addJs($this->GetPath().'/templates/'. $this->getTemplateName() . '/js/script.js');
 
@@ -43,7 +46,7 @@ class Lotoswcr extends CBitrixComponent
                 ->setPageSize($this->arParams['LIMIT'])
                 ->initFromUri();
 
-            $filter = ['ENTITY_ID' => intval($this->arParams['ENTITY_ID'])];
+            $filter = [];
             if ($this->arParams['USE_PREMODERATION'] == 'Y') {
                 $filter['ACTIVE'] = 'Y';
             }
@@ -51,13 +54,7 @@ class Lotoswcr extends CBitrixComponent
             // Get ORM entity
             $questions = CertTable::getList([
                 'select' => [
-                    '*', 
-                    'U_LOGIN' => 'USER.LOGIN',
-                    'U_NAME' => 'USER.NAME',  
-                    'U_LAST_NAME' => 'USER.LAST_NAME', 
-                    'U_PHOTO' => 'USER.PERSONAL_PHOTO',
-                    'U_SECOND_NAME' => 'USER.SECOND_NAME',
-
+                    '*'
                 ],
                 'filter' => $filter,
                 'order' => ['ID' => 'DESC'],
@@ -74,25 +71,6 @@ class Lotoswcr extends CBitrixComponent
 
             //Util::debug($rows);
 
-            // Create FULL_NAME
-            foreach ($rows as $k => $val) {
-                $rows[$k]['U_FULL_NAME'] = $this->getFullName($val, 'U');
-
-                // User photo
-                if ($val['U_PHOTO']) {
-                    $file = \CFile::GetFileArray($val['U_PHOTO']);
-                    $rows[$k]['U_PHOTO'] = $file['SRC'];
-                }
-
-                $rows[$k]['A_FULL_NAME'] = $this->getFullName($val, 'A');
-
-                // Admin photo
-                if ($val['A_PHOTO']) {
-                    $file = \CFile::GetFileArray($val['A_PHOTO']);
-                    $rows[$k]['A_PHOTO'] = $file['SRC'];
-                }
-            }
-
             $this->arResult["ITEMS"] = $rows;
             $this->arResult['NAV'] = $nav;
 
@@ -102,9 +80,9 @@ class Lotoswcr extends CBitrixComponent
             // Include template
             $this->includeComponentTemplate();
 
-	    } else {
-            $this->abortResultCache();
-        }
+	    //} else {
+            //$this->abortResultCache();
+        //}
 	}
 
     // Create full name user

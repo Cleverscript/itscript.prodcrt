@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS `b_itserw_lotoswcr_cert` (
     `ACTIVE` varchar(1) NOT NULL,
     `USER_ID` int NOT NULL,
     `ORDER_ID` int NOT NULL,
+    `PRODUCT_ID` int NOT NULL,
     `CITY` varchar(64) NOT NULL,
     `MODEL` varchar(64) NOT NULL,
     `FIO` varchar(64) NOT NULL,
