@@ -10,9 +10,8 @@
         <div id="wcr-form-js-alert" class="wcr-form-alert"></div>
         <form id="wcr-form-js" action="" method="POST">
             <div class="over-field">
-                <label for="wcr-field"><?=GetMessage("T_QUESTION_FIELD_LABEL");?></label>
 
-                <input id="order-id-js" type="text" name="ORDER_ID" value="<?=$_POST['ORDER_ID'] ?? null;?>" placeholder="ORDER_ID"/>
+                <input id="order-id-js" type="text" class="form-control" name="ORDER_ID" value="<?=$_POST['ORDER_ID'] ?? null;?>" placeholder="<?=GetMessage("T_QUESTION_FIELD_LABEL");?>"/>
 
                 <hr/>
 

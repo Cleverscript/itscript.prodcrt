@@ -89,16 +89,23 @@ class Cert extends Controller
         }
 
         if(count($addResult)==1) {
-            return ['ALERT' => Loc::getMessage('REQUEST_ADD_SUCCESS_ALERT', 
-                ['#ID#' => $addResult[0]]
-            )];
+            $resp = ['ALERT' => Loc::getMessage('REQUEST_ADD_SUCCESS_ALERT', 
+                ['#ID#' => $addResult[0]]), 
+                'STATUS' => 'success'
+            ];
         } elseif(count($addResult)>1) {
-            return ['ALERT' => Loc::getMessage('REQUEST_ADDS_SUCCESS_ALERT', 
-                ['#IDS#' => implode(', ', array_map(fn($id) => '#' . $id, $addResult))]
-            )];
+            $resp =['ALERT' => Loc::getMessage('REQUEST_ADDS_SUCCESS_ALERT', 
+                ['#IDS#' => implode(', ', array_map(fn($id) => '#' . $id, $addResult))]),
+                'STATUS' => 'success'
+            ];
+        } else {
+            $resp = [
+                'ALERT' => Loc::getMessage('REQUEST_ADDS_NULL_ALERT'), 
+                'STATUS' => 'warning'
+            ];
         }
 
-		return null;
+        return $resp;
 	}
 
 	public function viewAction(int $id):? array

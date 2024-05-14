@@ -29,7 +29,39 @@
     display:block; 
     clear:both;
 }
-.wcr-content-wrap{}
+.wcr-form input[type="text"]{}
+
+.wcr-form .form-control {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+.wcr-form .btn-primary{
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
 .answer-content-wrap{margin-left: 60px;}
 .content-over{
     padding-left: 58px;
@@ -73,6 +105,12 @@
     color: #721c24;
     background-color: #f8d7da;
     border-color: #f5c6cb;
+    display: block;
+}
+.wcr-form-alert.warning{
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
     display: block;
 }
 

@@ -79,7 +79,7 @@ $(document).ready(function(){
 
             let alertBlock = document.getElementById('wcr-form-js-alert');
             let formBlock = document.getElementById('wcr-form-js');
-            alertBlock.className += ' success';
+            alertBlock.className += ' ' + response.data['STATUS'];
             formBlock.className += ' hide';
 
             alertBlock.innerHTML += response.data['ALERT'];
@@ -88,7 +88,7 @@ $(document).ready(function(){
             console.log(response);
 
             let alertBlock = document.getElementById('wcr-form-js-alert');
-            alertBlock.className += ' error';
+            alertBlock.className += ' ' + response.data['STATUS'];
             alertBlock.innerHTML = '';
 
             for (let i = 0; i < response.errors.length; i++) {
@@ -143,10 +143,18 @@ $(document).ready(function(){
 
 
         }, function (response) { // status !== 'success'
-            console.log(response);
+            console.log(response.status);
 
             let alertBlock = document.getElementById('wcr-form-js-alert');
-            alertBlock.className += ' error';
+            let status = '';
+
+            if (!response.data) {
+                status = response.status;
+            } else {
+                status = response.data['STATUS'];
+            }
+
+            alertBlock.className += ' ' + status;
             alertBlock.innerHTML = '';
 
             for (let i = 0; i < response.errors.length; i++) {
