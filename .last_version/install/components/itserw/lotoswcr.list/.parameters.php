@@ -8,14 +8,7 @@ $arComponentParameters = [
 
 		"LIMIT" => [
 			"PARENT" => "BASE",
-			"NAME" => GetMessage("T_QUESTION_CONT"),
-			"TYPE" => "STRING",
-			"DEFAULT" => "20",
-		],
-
-		"ENTITY_ID" => [
-			"PARENT" => "BASE",
-			"NAME" => GetMessage("T_QUESTION_ENTITY_ID"),
+			"NAME" => GetMessage("T_WCR_CONT"),
 			"TYPE" => "STRING",
 			"DEFAULT" => "20",
 		],

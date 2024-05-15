@@ -278,8 +278,6 @@ class itserw_lotoswcr extends CModule
         $this->InstallEvents();
         $this->InstallEventSend();
 
-        //$this->InstallAgents();itscript_answers_list.php
-
         return true;
     }
 
@@ -288,9 +286,8 @@ class itserw_lotoswcr extends CModule
         ModuleManager::unRegisterModule($this->MODULE_ID);
         $this->UnInstallEvents();
         $this->UnInstallFiles();
-        $this->UninstallDB();
+        //$this->UninstallDB();
         $this->UnInstallEventSend();
-        //$this->UnInstallAgents();
 
         return true;
     }

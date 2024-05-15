@@ -9,6 +9,7 @@
     <div id="wcr-form-over-js" class="wcr-form">
         <div id="wcr-form-js-alert" class="wcr-form-alert"></div>
         <form id="wcr-form-js" action="" method="POST">
+            <?=bitrix_sessid_post();?>
             <div class="over-field">
 
                 <input id="order-id-js" type="text" class="form-control" name="ORDER_ID" value="<?=$_POST['ORDER_ID'] ?? null;?>" placeholder="<?=GetMessage("T_QUESTION_FIELD_LABEL");?>"/>

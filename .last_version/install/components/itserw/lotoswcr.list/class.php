@@ -6,10 +6,13 @@ use Bitrix\Main\UI\PageNavigation;
 use Bitrix\Main\FileTable;
 use Bitrix\Main\Type\DateTime;
 use Bitrix\Main\Engine\CurrentUser;
-use \Itserw\Lotoswcr\CertTable;
+use Itserw\Lotoswcr\CertTable;
+use Bitrix\Main\Localization\Loc;
 use Itserw\Lotoswcr\Util;
 
 Loader::includeModule('itserw.lotoswcr');
+
+IncludeTemplateLangFile(__FILE__);
 
 class Lotoswcr extends CBitrixComponent
 {
@@ -31,8 +34,11 @@ class Lotoswcr extends CBitrixComponent
 
 	public function executeComponent() {
 
-		//if ($this->startResultCache(false, array(($this->arParams["CACHE_GROUPS"]==="N"? false: CurrentUser::get()->getUserGroups())))) {
+        $userId = \Bitrix\Main\Engine\CurrentUser::get()->getId();
+
+		if ($this->startResultCache(false, array(($this->arParams["CACHE_GROUPS"]==="N"? false: $userId)))) {
 	        
+            $items = [];
             // add assets
 
             //var_dump($this->getTemplateName());
@@ -47,31 +53,37 @@ class Lotoswcr extends CBitrixComponent
                 ->initFromUri();
 
             $filter = [];
-            if ($this->arParams['USE_PREMODERATION'] == 'Y') {
-                $filter['ACTIVE'] = 'Y';
-            }
+            $filter['ACTIVE'] = 'Y';
+            $filter['USER_ID'] = $userId;
+            
 
             // Get ORM entity
-            $questions = CertTable::getList([
-                'select' => [
-                    '*'
-                ],
+            $cert = CertTable::getList([
+                'select' => ['*'],
                 'filter' => $filter,
-                'order' => ['ID' => 'DESC'],
+                'order' => ['ORDER_ID' => 'DESC'],
+                'group' => ['ORDER_ID'],
                 'offset' => $nav->getOffset(),
                 'limit' => $nav->getLimit(),
                 'count_total' => true
             ]);
 
             // Set full count elements entity
-            $nav->setRecordCount($questions->getCount());
+            $nav->setRecordCount($cert->getCount());
 
             // Fetch all items per page
-            $rows  = $questions->fetchAll();
+            $rows  = $cert->fetchAll();
 
-            //Util::debug($rows);
+            foreach($rows as &$item) {
+                $arFile = CFile::GetFileArray($item['FILE_ID']);
+                $item['FILE_SRC'] = $arFile['SRC'];
+                $items[$item['ORDER_ID']]['ORDER_DATE_INSERT'] = $item['ORDER_DATE_INSERT'];
+                $items[$item['ORDER_ID']]['CERTS'][] = $item;
+            }
 
-            $this->arResult["ITEMS"] = $rows;
+            //Util::debug($items);
+
+            $this->arResult["ITEMS"] = $items;
             $this->arResult['NAV'] = $nav;
 
             // Save data cache
@@ -80,8 +92,11 @@ class Lotoswcr extends CBitrixComponent
             // Include template
             $this->includeComponentTemplate();
 
-	    //} else {
-            //$this->abortResultCache();
-        //}
+	    } else {
+            $this->abortResultCache();
+        }
+
+        global $APPLICATION;
+        $APPLICATION->SetTitle(Loc::getMessage('T_PAGE_TITLE'));
 	}
 }
