@@ -33,7 +33,7 @@ class itserw_lotoswcr extends CModule
 
     public $eventManager;
 
-    function __construct() {
+    public function __construct() {
 
         $arModuleVersion = array();
         include(__DIR__ . "/version.php");
@@ -72,7 +72,7 @@ class itserw_lotoswcr extends CModule
         } else {
 
             return dirname(__DIR__);
-
+            
         }
     }
 
@@ -102,11 +102,11 @@ class itserw_lotoswcr extends CModule
             return false;
         }
 
-        /*if (!CopyDirFiles(
+        if (!CopyDirFiles(
             $this->GetPath() . '/install/components', 
             $_SERVER["DOCUMENT_ROOT"]."/bitrix/components/", true, true)) {
             return false;
-        }*/
+        }
 
         return true;
     }
@@ -211,8 +211,8 @@ class itserw_lotoswcr extends CModule
     // Create entity table in database
     public function InstallDB() {
 
-        global $DB, $APPLICATION;
-        $this->errors = $DB->RunSQLBatch(self::GetPath() . '/install/db/install.sql');
+        global $DB, $DBType, $APPLICATION;
+        $this->errors = $DB->RunSQLBatch(self::GetPath() . "/install/db/" . $DBType . "/install.sql");
 
         if($this->errors !== false) {
 
@@ -224,15 +224,22 @@ class itserw_lotoswcr extends CModule
         return true;
     }
 
-    public function UninstallDB() {
+    public function UninstallDB($arParams = array()) {
 
-        global $DB, $APPLICATION;
-        $this->errors = $DB->RunSQLBatch(self::GetPath() . '/install/db/uninstall.sql');
-        if ($this->errors !== false) {
+        global $DB, $DBType, $APPLICATION;
 
-            $APPLICATION->ThrowException(implode("", $this->errors));
+        $this->errors = false;
 
-            return false;
+        if (array_key_exists('savedata', $arParams) && $arParams['savedata'] != 'Y') {
+
+            $this->errors = $DB->RunSQLBatch(self::GetPath() . "/install/db/" . $DBType . "/uninstall.sql");
+
+            if ($this->errors !== false) {
+
+                $APPLICATION->ThrowException(implode("", $this->errors));
+
+                return false;
+            }
         }
 
         return true;
@@ -283,13 +290,29 @@ class itserw_lotoswcr extends CModule
 
     function DoUninstall() {
 
-        ModuleManager::unRegisterModule($this->MODULE_ID);
-        $this->UnInstallEvents();
-        $this->UnInstallFiles();
-        //$this->UninstallDB();
-        $this->UnInstallEventSend();
+        global $APPLICATION, $step;
+        $step = intval($step);
 
-        return true;
+        //var_dump($this->GetPath());
+
+        if ($step < 2) {
+
+            $APPLICATION->IncludeAdminFile(
+                GetMessage('ITSERW_LOTOSWCR_UNINSTALL_TITLE'),
+                $this->GetPath() . '/install/unstep1.php'
+            );
+
+        } elseif ($step == 2) {
+
+            ModuleManager::unRegisterModule($this->MODULE_ID);
+            $this->UnInstallEvents();
+            $this->UnInstallFiles();
+            $this->UninstallDB(array('savedata' => $_REQUEST['savedata']));
+            $this->UnInstallEventSend();
+
+        }
+
+        $GLOBALS['errors'] = $this->errors;
     }
 
     function GetModuleRightList() {

@@ -52,9 +52,12 @@ class Lotoswcr extends CBitrixComponent
                 ->setPageSize($this->arParams['LIMIT'])
                 ->initFromUri();
 
-            $filter = [];
-            $filter['ACTIVE'] = 'Y';
-            $filter['USER_ID'] = $userId;
+            $filter = [
+                'ACTIVE' => 'Y', 
+                'USER_ID' => $userId,
+                '!=FILE_ID' => null
+            ];
+
             
 
             // Get ORM entity

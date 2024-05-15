@@ -35,9 +35,8 @@ $aTabs = [
 
     //MAIN PROPS
     $arMainPropsTab,
-
     [
-        "DIV" => "edit5",
+        "DIV" => "edit2",
         "TAB" => Loc::getMessage("MAIN_TAB_RIGHTS"),
         "TITLE" => Loc::getMessage("MAIN_TAB_TITLE_RIGHTS")
     ],
