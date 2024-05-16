@@ -7,9 +7,9 @@ use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Config\Option;
 use Bitrix\Main\Application;
 use Bitrix\Main\UI\PageNavigation;
-use Itserw\Lotoswcr\CertTable;
+use Itscript\Prodcrt\CertTable;
 
-$module_id = "itserw.lotoswcr";
+$module_id = "itscript.prodcrt";
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_admin_before.php');
 require_once(dirname(__FILE__)."/../include.php");
@@ -22,12 +22,12 @@ $FORM_RIGHT = $APPLICATION->GetGroupRight($module_id);
 if($FORM_RIGHT<="D") $APPLICATION->AuthForm(Loc::getMessage("ACCESS_DENIED"));
 
 if(!Loader::includeModule($module_id)){
-	CAdminMessage::ShowMessage(Loc::getMessage("ITSERW_LOTOSWCR_INCLUDE_MODULE_ERROR", ['#MODULE_ID#' => $module_id]));
+	CAdminMessage::ShowMessage(Loc::getMessage("ITSCRIPT_PRODCRT_INCLUDE_MODULE_ERROR", ['#MODULE_ID#' => $module_id]));
 }
 
 CJSCore::Init(array('ajax', 'json', 'ls', 'session', 'jquery', 'popup', 'pull'));
 
-$adminListTableID = 'b_itserw_lotoswcr_cert';
+$adminListTableID = 'b_itscript_prodcrt_cert';
 
 $adminSort = new CAdminSorting($adminListTableID, 'ID', 'ASC');
 $adminList = new CAdminUiList($adminListTableID, $adminSort);
@@ -42,43 +42,43 @@ $filterFields = array(
     ),
     array(
         "id" => "USER_ID",
-        "name" => Loc::getMessage("ITSERW_LOTOSWCR_TITLE_USER_ID"),
+        "name" => Loc::getMessage("ITSCRIPT_PRODCRT_TITLE_USER_ID"),
         "type" => "int",
         "filterable" => "="
     ),
     array(
         "id" => "ORDER_ID",
-        "name" => Loc::getMessage("ITSERW_LOTOSWCR_TITLE_ORDER_ID"),
+        "name" => Loc::getMessage("ITSCRIPT_PRODCRT_TITLE_ORDER_ID"),
         "type" => "int",
         "filterable" => "="
     ),
     array(
         "id" => "CITY",
-        "name" => Loc::getMessage("ITSERW_LOTOSWCR_TITLE_CITY"),
+        "name" => Loc::getMessage("ITSCRIPT_PRODCRT_TITLE_CITY"),
         "type" => "text",
         "filterable" => "%"
     ),
     array(
         "id" => "MODEL",
-        "name" => Loc::getMessage("ITSERW_LOTOSWCR_TITLE_MODEL"),
+        "name" => Loc::getMessage("ITSCRIPT_PRODCRT_TITLE_MODEL"),
         "type" => "text",
         "filterable" => "%"
     ),
     array(
         "id" => "EMAIL",
-        "name" => Loc::getMessage("ITSERW_LOTOSWCR_TITLE_EMAIL"),
+        "name" => Loc::getMessage("ITSCRIPT_PRODCRT_TITLE_EMAIL"),
         "type" => "text",
         "filterable" => "="
     ),
     array(
         "id" => "FIO",
-        "name" => Loc::getMessage("ITSERW_LOTOSWCR_TITLE_FIO"),
+        "name" => Loc::getMessage("ITSCRIPT_PRODCRT_TITLE_FIO"),
         "type" => "text",
         "filterable" => "%"
     ),
     array(
         "id" => "SENDED",
-        "name" => Loc::getMessage("ITSERW_LOTOSWCR_TITLE_SENDED"),
+        "name" => Loc::getMessage("ITSCRIPT_PRODCRT_TITLE_SENDED"),
         "type" => "select",
         "value" => ["Y" => "Y", "N" => "N"],
         "filterable" => "="
@@ -159,66 +159,66 @@ $headerList['ID'] = array(
 
 $headerList['USER_ID'] = array(
     'id' => 'USER_ID',
-    'content' => Loc::getMessage('ITSERW_LOTOSWCR_TITLE_USER_ID'),
-    'title' => Loc::getMessage('ITSERW_LOTOSWCR_TITLE_USER_ID'),
+    'content' => Loc::getMessage('ITSCRIPT_PRODCRT_TITLE_USER_ID'),
+    'title' => Loc::getMessage('ITSCRIPT_PRODCRT_TITLE_USER_ID'),
     'sort' => 'USER_ID',
     'default' => false
 );
 $headerList['ORDER_ID'] = array(
     'id' => 'ORDER_ID',
-    'content' => Loc::getMessage('ITSERW_LOTOSWCR_TITLE_ORDER_ID'),
-    'title' => Loc::getMessage('ITSERW_LOTOSWCR_TITLE_ORDER_ID'),
+    'content' => Loc::getMessage('ITSCRIPT_PRODCRT_TITLE_ORDER_ID'),
+    'title' => Loc::getMessage('ITSCRIPT_PRODCRT_TITLE_ORDER_ID'),
     'sort' => 'ORDER_ID',
     'default' => false
 );
 $headerList['CITY'] = array(
     'id' => 'CITY',
-    'content' => Loc::getMessage('ITSERW_LOTOSWCR_TITLE_CITY'),
-    'title' => Loc::getMessage('ITSERW_LOTOSWCR_TITLE_CITY'),
+    'content' => Loc::getMessage('ITSCRIPT_PRODCRT_TITLE_CITY'),
+    'title' => Loc::getMessage('ITSCRIPT_PRODCRT_TITLE_CITY'),
     'sort' => 'CITY',
     'default' => true
 );
 $headerList['MODEL'] = array(
     'id' => 'MODEL',
-    'content' => Loc::getMessage('ITSERW_LOTOSWCR_TITLE_MODEL'),
-    'title' => Loc::getMessage('ITSERW_LOTOSWCR_TITLE_MODEL'),
+    'content' => Loc::getMessage('ITSCRIPT_PRODCRT_TITLE_MODEL'),
+    'title' => Loc::getMessage('ITSCRIPT_PRODCRT_TITLE_MODEL'),
     'sort' => 'MODEL',
     'default' => true
 );
 $headerList['FIO'] = array(
     'id' => 'FIO',
-    'content' => Loc::getMessage('ITSERW_LOTOSWCR_TITLE_FIO'),
-    'title' => Loc::getMessage('ITSERW_LOTOSWCR_TITLE_FIO'),
+    'content' => Loc::getMessage('ITSCRIPT_PRODCRT_TITLE_FIO'),
+    'title' => Loc::getMessage('ITSCRIPT_PRODCRT_TITLE_FIO'),
     'sort' => 'FIO',
     'default' => true
 );
 $headerList['EMAIL'] = array(
     'id' => 'EMAIL',
-    'content' => Loc::getMessage('ITSERW_LOTOSWCR_TITLE_EMAIL'),
-    'title' => Loc::getMessage('ITSERW_LOTOSWCR_TITLE_EMAIL'),
+    'content' => Loc::getMessage('ITSCRIPT_PRODCRT_TITLE_EMAIL'),
+    'title' => Loc::getMessage('ITSCRIPT_PRODCRT_TITLE_EMAIL'),
     'sort' => 'EMAIL',
     'default' => true
 );
 
 $headerList['ACTIVE'] = array(
     'id' => 'ACTIVE',
-    'content' => Loc::getMessage('ITSERW_LOTOSWCR_TITLE_ACTIVE'),
-    'title' => Loc::getMessage('ITSERW_LOTOSWCR_TITLE_ACTIVE'),
+    'content' => Loc::getMessage('ITSCRIPT_PRODCRT_TITLE_ACTIVE'),
+    'title' => Loc::getMessage('ITSCRIPT_PRODCRT_TITLE_ACTIVE'),
     'sort' => 'ACTIVE',
     'default' => false
 );
 
 $headerList['DATE_INSERT'] = array(
     'id' => 'DATE_INSERT',
-    'content' => Loc::getMessage('ITSERW_LOTOSWCR_TITLE_DATE_INSERT'),
-    'title' => Loc::getMessage('ITSERW_LOTOSWCR_TITLE_DATE_INSERT'),
+    'content' => Loc::getMessage('ITSCRIPT_PRODCRT_TITLE_DATE_INSERT'),
+    'title' => Loc::getMessage('ITSCRIPT_PRODCRT_TITLE_DATE_INSERT'),
     'sort' => 'CREATED',
     'default' => true
 );
 $headerList['ORDER_DATE_INSERT'] = array(
     'id' => 'ORDER_DATE_INSERT',
-    'content' => Loc::getMessage('ITSERW_LOTOSWCR_TITLE_ORDER_DATE_INSERT'),
-    'title' => Loc::getMessage('ITSERW_LOTOSWCR_TITLE_ORDER_DATE_INSERT'),
+    'content' => Loc::getMessage('ITSCRIPT_PRODCRT_TITLE_ORDER_DATE_INSERT'),
+    'title' => Loc::getMessage('ITSCRIPT_PRODCRT_TITLE_ORDER_DATE_INSERT'),
     'sort' => 'CREATED',
     'default' => true
 );
@@ -306,11 +306,11 @@ if ($usePageNavigation) {
 }
 $onlyDel = false;
 $yesNo = [
-    'N' => Loc::getMessage("ITSERW_LOTOSWCR_TITLE_NO"),
-    'Y' => Loc::getMessage("ITSERW_LOTOSWCR_TITLE_YES"),
+    'N' => Loc::getMessage("ITSCRIPT_PRODCRT_TITLE_NO"),
+    'Y' => Loc::getMessage("ITSCRIPT_PRODCRT_TITLE_YES"),
 ];
 CTimeZone::Disable();
-$adminList->SetNavigationParams($formIterator, array("BASE_LINK" => $selfFolderUrl . "itserw_lotoswcr_cert_list.php"));
+$adminList->SetNavigationParams($formIterator, array("BASE_LINK" => $selfFolderUrl . "itscript_prodcrt_cert_list.php"));
 while($form = $formIterator->fetch()) {
     $result[]=$form;
 }
@@ -320,14 +320,14 @@ $prm['SELECT'] = $getListParams['select'];
 foreach($result as $form)
 {
     $form['ID'] = (int)$form['ID'];
-    $urlEdit = $selfFolderUrl . 'itserw_lotoswcr_cert_edit.php?ID=' . $form['ID'] . '&lang=' . LANGUAGE_ID;
+    $urlEdit = $selfFolderUrl . 'itscript_prodcrt_cert_edit.php?ID=' . $form['ID'] . '&lang=' . LANGUAGE_ID;
     $urlEdit = $adminSidePanelHelper->editUrlToPublicPage($urlEdit);
 
     $rowList[$form['ID']] = $row = &$adminList->AddRow(
         $form['ID'],
         $form,
         $urlEdit,
-        Loc::getMessage("ITSERW_LOTOSWCR_EDIT")
+        Loc::getMessage("ITSCRIPT_PRODCRT_EDIT")
     );
 
     if ($onlyDel) {
@@ -364,19 +364,19 @@ foreach($result as $form)
         $row->AddViewField('ACTIVE', $yesNo[$form['ACTIVE']]);
     }
     
-    if ($selectFieldsMap['ITSERW_LOTOSWCR_TITLE_DATE_INSERT']) {
-        $row->AddViewField('ITSERW_LOTOSWCR_TITLE_DATE_INSERT', $form['ITSERW_LOTOSWCR_TITLE_DATE_INSERT']->format('d.m.Y H:i:s'));
+    if ($selectFieldsMap['ITSCRIPT_PRODCRT_TITLE_DATE_INSERT']) {
+        $row->AddViewField('ITSCRIPT_PRODCRT_TITLE_DATE_INSERT', $form['ITSCRIPT_PRODCRT_TITLE_DATE_INSERT']->format('d.m.Y H:i:s'));
     }
 
-    if ($selectFieldsMap['ITSERW_LOTOSWCR_TITLE_ORDER_DATE_INSERT']) {
-        $row->AddViewField('ITSERW_LOTOSWCR_TITLE_ORDER_DATE_INSERT', $form['ITSERW_LOTOSWCR_TITLE_ORDER_DATE_INSERT']->format('d.m.Y H:i:s'));
+    if ($selectFieldsMap['ITSCRIPT_PRODCRT_TITLE_ORDER_DATE_INSERT']) {
+        $row->AddViewField('ITSCRIPT_PRODCRT_TITLE_ORDER_DATE_INSERT', $form['ITSCRIPT_PRODCRT_TITLE_ORDER_DATE_INSERT']->format('d.m.Y H:i:s'));
     }
 
     $actions = array();
     if (!$onlyDel) {
         $actions[] = array(
             'ICON' => 'edit',
-            'TEXT' => Loc::getMessage("ITSERW_LOTOSWCR_EDIT"),
+            'TEXT' => Loc::getMessage("ITSCRIPT_PRODCRT_EDIT"),
             'LINK' => $urlEdit,
             'DEFAULT' => true
         );
@@ -384,8 +384,8 @@ foreach($result as $form)
     if (!$readOnly) {
         $actions[] = array(
             'ICON' => 'delete',
-            'TEXT' => Loc::getMessage("ITSERW_LOTOSWCR_DELETE"),
-            'ACTION' => "if (confirm('" . Loc::getMessage("ITSERW_LOTOSWCR_DELETE_ALERT") . "')) " . $adminList->ActionDoGroup($form['ID'], 'delete')
+            'TEXT' => Loc::getMessage("ITSCRIPT_PRODCRT_DELETE"),
+            'ACTION' => "if (confirm('" . Loc::getMessage("ITSCRIPT_PRODCRT_DELETE_ALERT") . "')) " . $adminList->ActionDoGroup($form['ID'], 'delete')
         );
     }
     $row->AddActions($actions);
@@ -402,24 +402,24 @@ $adminList->AddGroupActionTable([
 $contextMenu = array();
 
 if (!$readOnly) {
-    $addUrl = $selfFolderUrl . "itserw_lotoswcr_cert_edit.php?lang=" . LANGUAGE_ID;
+    $addUrl = $selfFolderUrl . "itscript_prodcrt_cert_edit.php?lang=" . LANGUAGE_ID;
     $addUrl = $adminSidePanelHelper->editUrlToPublicPage($addUrl);
     $contextMenu[] = array(
         'ICON' => 'btn_new',
-        'TEXT' => Loc::getMessage('ITSERW_LOTOSWCR_ADD'),
-        'TITLE' => Loc::getMessage('ITSERW_LOTOSWCR_ADD'),
+        'TEXT' => Loc::getMessage('ITSCRIPT_PRODCRT_ADD'),
+        'TITLE' => Loc::getMessage('ITSCRIPT_PRODCRT_ADD'),
         'LINK' => $addUrl
     );
 }
 
 if (!empty($contextMenu)) {
-    $adminList->setContextSettings(array("pagePath" => $selfFolderUrl . "itserw_lotoswcr_cert_list.php"));
+    $adminList->setContextSettings(array("pagePath" => $selfFolderUrl . "itscript_prodcrt_cert_list.php"));
     $adminList->AddAdminContextMenu($contextMenu);
 }
 
 $adminList->CheckListMode();
 
-$APPLICATION->SetTitle(Loc::getMessage("ITSERW_LOTOSWCR_PAGE_TITLE"));
+$APPLICATION->SetTitle(Loc::getMessage("ITSCRIPT_PRODCRT_PAGE_TITLE"));
 
 require($_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_admin_after.php');
 

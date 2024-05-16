@@ -4,9 +4,9 @@ use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\HttpApplication;
 use Bitrix\Main\Config\Option;
-use Itserw\Lotoswcr\Util;
+use Itscript\Prodcrt\Util;
 
-$module_id = "itserw.lotoswcr";
+$module_id = "itscript.prodcrt";
 
 IncludeModuleLangFile($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/options.php');
 IncludeModuleLangFile(__FILE__);
@@ -19,12 +19,12 @@ $defaultOptions = Option::getDefaults($module_id);
 
 $arMainPropsTab = [
 	"DIV" => "edit1",
-	"TAB" => Loc::getMessage("ITSERW_LOTOSWCR_MAIN_TAB_SETTINGS"),
-	"TITLE" => Loc::getMessage("ITSERW_LOTOSWCR_MAIN_TAB_SETTINGS_TITLE"),
+	"TAB" => Loc::getMessage("ITSCRIPT_PRODCRT_MAIN_TAB_SETTINGS"),
+	"TITLE" => Loc::getMessage("ITSCRIPT_PRODCRT_MAIN_TAB_SETTINGS_TITLE"),
 	"OPTIONS" => [
 
-		["ITSERW_LOTOSWCR_CONFIG_DEBUG", Loc::getMessage("T_ITSERW_LOTOSWCR_CONFIG_DEBUG"),
-			$defaultOptions["ITSERW_LOTOSWCR_CONFIG_DEBUG"],
+		["ITSCRIPT_PRODCRT_CONFIG_DEBUG", Loc::getMessage("T_ITSCRIPT_PRODCRT_CONFIG_DEBUG"),
+			$defaultOptions["ITSCRIPT_PRODCRT_CONFIG_DEBUG"],
 			["checkbox"]
         ],
 

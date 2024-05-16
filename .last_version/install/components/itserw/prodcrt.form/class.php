@@ -6,12 +6,12 @@ use Bitrix\Main\UI\PageNavigation;
 use Bitrix\Main\FileTable;
 use Bitrix\Main\Type\DateTime;
 use Bitrix\Main\Engine\CurrentUser;
-use \Itserw\Lotoswcr\CertTable;
-use Itserw\Lotoswcr\Util;
+use \Itscript\Prodcrt\CertTable;
+use Itscript\Prodcrt\Util;
 
-Loader::includeModule('itserw.lotoswcr');
+Loader::includeModule('itscript.prodcrt');
 
-class LotoswcrForm extends CBitrixComponent
+class ProdcrtForm extends CBitrixComponent
 {
 	public function onPrepareComponentParams($arParams) {
 

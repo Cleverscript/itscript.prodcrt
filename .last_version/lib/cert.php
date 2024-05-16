@@ -1,5 +1,5 @@
 <?php
-namespace Itserw\Lotoswcr;
+namespace Itscript\Prodcrt;
 
 use Bitrix\Main\UserTable;
 use Bitrix\Main\OrderTable;

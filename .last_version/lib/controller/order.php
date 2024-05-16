@@ -1,5 +1,5 @@
 <?php
-namespace Itserw\Lotoswcr\Controller;
+namespace Itscript\Prodcrt\Controller;
 
 use Bitrix\Main\Error;
 use Bitrix\Main\Loader;
@@ -7,10 +7,10 @@ use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Engine\Controller;
 use Bitrix\Main\Engine\ActionFilter;
 use Bitrix\Main\Engine\CurrentUser;
-use Itserw\Lotoswcr\CertTable;
-use Itserw\Lotoswcr\Util;
+use Itscript\Prodcrt\CertTable;
+use Itscript\Prodcrt\Util;
 
-Loader::includeModule('itserw.lotoswcr');
+Loader::includeModule('itscript.prodcrt');
 Loader::includeModule('sale');
 
 Loc::loadMessages(__FILE__); 

@@ -1,4 +1,4 @@
 <?php
-$itscript_qna_default_option = array(
-    "ITSERW_LOTOSWCR_CONFIG_DEBUG" => 'N',
+$itscript_prodcrt_default_option = array(
+    "ITSCRIPT_PRODCRT_CONFIG_DEBUG" => 'N',
 );

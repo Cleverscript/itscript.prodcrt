@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `b_itserw_lotoswcr_cert` (
+CREATE TABLE IF NOT EXISTS `b_itscript_prodcrt_cert` (
     `ID` int NOT NULL AUTO_INCREMENT,
     `ACTIVE` varchar(1) NOT NULL,
     `USER_ID` int NOT NULL,

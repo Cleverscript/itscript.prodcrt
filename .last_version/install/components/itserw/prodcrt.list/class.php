@@ -6,21 +6,17 @@ use Bitrix\Main\UI\PageNavigation;
 use Bitrix\Main\FileTable;
 use Bitrix\Main\Type\DateTime;
 use Bitrix\Main\Engine\CurrentUser;
-use Itserw\Lotoswcr\CertTable;
+use Itscript\Prodcrt\CertTable;
 use Bitrix\Main\Localization\Loc;
-use Itserw\Lotoswcr\Util;
+use Itscript\Prodcrt\Util;
 
-Loader::includeModule('itserw.lotoswcr');
+Loader::includeModule('itscript.prodcrt');
 
 IncludeTemplateLangFile(__FILE__);
 
-class LotoswcrList extends CBitrixComponent
+class ProdcrtList extends CBitrixComponent
 {
 	public function onPrepareComponentParams($arParams) {
-
-        /*echo '<pre>';
-        print_r($arParams);
-        echo '</pre>';*/
 
 		$result = [
 			"CACHE_TYPE" => $arParams["CACHE_TYPE"],
@@ -82,8 +78,6 @@ class LotoswcrList extends CBitrixComponent
                 $items[$item['ORDER_ID']]['ORDER_DATE_INSERT'] = $item['ORDER_DATE_INSERT'];
                 $items[$item['ORDER_ID']]['CERTS'][] = $item;
             }
-
-            //Util::debug($items);
 
             $this->arResult["ITEMS"] = $items;
             $this->arResult['NAV'] = $nav;

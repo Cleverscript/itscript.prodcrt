@@ -1,15 +1,15 @@
 <?php
-namespace Itserw\Lotoswcr;
+namespace itscript\Prodcrt;
 
 use Bitrix\Main;
 use Bitrix\Main\Config\Option;
-use Itserw\Lotoswcr\CertTable;
+use Itscript\Prodcrt\CertTable;
 
 IncludeModuleLangFile(__FILE__);
 
 class Util
 {
-    const MODULE_ID = "itserw.lotoswcr";
+    const MODULE_ID = "itscript.prodcrt";
 
     /**
      * Check exists product id from order in requests
@@ -60,8 +60,8 @@ class Util
             "type" => $file["type"],
             "old_file" => "",
             "del" => $del,
-            "MODULE_ID" => "itserw.lotoswcr"
-        ], "/itserw_lotoswcr_cert/");
+            "MODULE_ID" => "itscript.prodcrt"
+        ], "/itscript_prodcrt_cert/");
     }
 
 }

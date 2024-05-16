@@ -12,15 +12,15 @@ use Bitrix\Main\IO\Directory;
 Loc::loadMessages(__FILE__);
 
 /**
- * Class itserw_lotoswcr
+ * Class itscript_prodcrt
  */
 
-if (class_exists("itserw_lotoswcr")) return;
+if (class_exists("itscript_prodcrt")) return;
 
-class itserw_lotoswcr extends CModule
+class itscript_prodcrt extends CModule
 {
-    public $MODULE_ID = "itserw.lotoswcr";
-    public $SOLUTION_NAME = "lotoswcr";
+    public $MODULE_ID = "itscript.prodcrt";
+    public $SOLUTION_NAME = "prodcrt";
     public $MODULE_VERSION;
     public $MODULE_VERSION_DATE;
     public $MODULE_NAME;
@@ -45,11 +45,11 @@ class itserw_lotoswcr extends CModule
 
         $this->MODULE_VERSION = $arModuleVersion["VERSION"];
         $this->MODULE_VERSION_DATE = $arModuleVersion["VERSION_DATE"];
-        $this->MODULE_NAME = Loc::getMessage("ITSERW_LOTOSWCR_MODULE_NAME");
-        $this->MODULE_DESCRIPTION = Loc::getMessage("ITSERW_LOTOSWCR_MODULE_DESC");
+        $this->MODULE_NAME = Loc::getMessage("ITSCRIPT_PRODCRT_MODULE_NAME");
+        $this->MODULE_DESCRIPTION = Loc::getMessage("ITSCRIPT_PRODCRT_MODULE_DESC");
 
-        $this->PARTNER_NAME = Loc::getMessage("ITSERW_LOTOSWCR_PARTNER_NAME");
-        $this->PARTNER_URI = Loc::getMessage("ITSERW_LOTOSWCR_PARTNER_URI");
+        $this->PARTNER_NAME = Loc::getMessage("ITSCRIPT_PRODCRT_PARTNER_NAME");
+        $this->PARTNER_URI = Loc::getMessage("ITSCRIPT_PRODCRT_PARTNER_URI");
 
         $this->MODULE_SORT = 1;
         $this->SHOW_SUPER_ADMIN_GROUP_RIGHTS = 'Y';
@@ -114,17 +114,17 @@ class itserw_lotoswcr extends CModule
     function UnInstallFiles() {
 
         File::deleteFile(
-            $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin/itserw_lotoswcr_cert_list.php"
+            $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin/itscript_prodcrt_cert_list.php"
         );
         File::deleteFile(
-            $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin/itserw_lotoswcr_cert_edit.php"
+            $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin/itscript_prodcrt_cert_edit.php"
         );
 
         Directory::deleteDirectory(
-            $_SERVER["DOCUMENT_ROOT"] . '/bitrix/components/' . $this->getVendor() . '/lotoswcr.list'
+            $_SERVER["DOCUMENT_ROOT"] . '/bitrix/components/' . $this->getVendor() . '/prodcrt.list'
         );
         Directory::deleteDirectory(
-            $_SERVER["DOCUMENT_ROOT"] . '/bitrix/components/' . $this->getVendor() . '/lotoswcr.form'
+            $_SERVER["DOCUMENT_ROOT"] . '/bitrix/components/' . $this->getVendor() . '/prodcrt.form'
         );
 
     }
@@ -138,7 +138,7 @@ class itserw_lotoswcr extends CModule
             'main', 
             'OnBuildGlobalMenu', 
             $this->MODULE_ID, 
-            '\Itserw\Lotoswcr\Menu', 
+            '\Itscript\Prodcrt\Menu', 
             'adminOnBuildGlobalMenu', 
             9999
         );
@@ -147,7 +147,7 @@ class itserw_lotoswcr extends CModule
             $this->MODULE_ID, 
             "OnAfterCertApply", 
             $this->MODULE_ID, 
-            "\Itserw\Lotoswcr\Events", 
+            "\Itscript\Prodcrt\Events", 
             "OnAfterCertApplyHandler", 
             "100"
         );
@@ -159,23 +159,23 @@ class itserw_lotoswcr extends CModule
     function UnInstallEvents() {
 
         $eventManager = EventManager::getInstance();
-        $eventManager->unRegisterEventHandler('main', 'OnBuildGlobalMenu', $this->MODULE_ID, '\Itserw\Lotoswcr\Menu', 'adminOnBuildGlobalMenu');
-        $eventManager->unRegisterEventHandler($this->MODULE_ID, 'OnAfterCertApply', $this->MODULE_ID, '\Itserw\Lotoswcr\Events', 'OnAfterCertApplyHandler');
+        $eventManager->unRegisterEventHandler('main', 'OnBuildGlobalMenu', $this->MODULE_ID, '\Itscript\Prodcrt\Menu', 'adminOnBuildGlobalMenu');
+        $eventManager->unRegisterEventHandler($this->MODULE_ID, 'OnAfterCertApply', $this->MODULE_ID, '\Itscript\Prodcrt\Events', 'OnAfterCertApplyHandler');
     
     }
 
 
     public function InstallEventSend() {
 
-        $eventName = "ITSERW_LOTOSWCR_APPLY_CERT";
+        $eventName = "ITSCRIPT_PRODCRT_APPLY_CERT";
 
         $obEventType = new CEventType;
         $obEventType->Add([
             "EVENT_TYPE" => 'email',
             "EVENT_NAME"    => $eventName ,
-            "NAME"          => Loc::getMessage("ITSERW_LOTOSWCR_APPLY_CERT"),
+            "NAME"          => Loc::getMessage("ITSCRIPT_PRODCRT_APPLY_CERT"),
             "LID"           => "ru",
-            "DESCRIPTION"   => Loc::getMessage("ITSERW_LOTOSWCR_APPLY_CERT_DESCRIPTION")
+            "DESCRIPTION"   => Loc::getMessage("ITSCRIPT_PRODCRT_APPLY_CERT_DESCRIPTION")
         ]);
 
         $oEventMessage = new CEventMessage();
@@ -186,27 +186,27 @@ class itserw_lotoswcr extends CModule
             "LANGUAGE_ID" => "ru",
             "EMAIL_FROM" => "#DEFAULT_EMAIL_FROM#",
             "EMAIL_TO" => "#EMAIL#",
-            "SUBJECT" => Loc::getMessage("ITSERW_LOTOSWCR_APPLY_CERT_SUBJECT"),
-            "MESSAGE" => Loc::getMessage("ITSERW_LOTOSWCR_APPLY_CERT_MESSAGE"),
+            "SUBJECT" => Loc::getMessage("ITSCRIPT_PRODCRT_APPLY_CERT_SUBJECT"),
+            "MESSAGE" => Loc::getMessage("ITSCRIPT_PRODCRT_APPLY_CERT_MESSAGE"),
             "BODY_TYPE" => "html"
         ];
         
         $id = $oEventMessage->Add($arFields);
 
-        Option::set($this->MODULE_ID, 'ITSERW_LOTOSWCR_EVENT_TYPE', $eventName);
-        Option::set($this->MODULE_ID, 'ITSERW_LOTOSWCR_EVENT_TYPE_EMAIL_TEMPLATE_ID', $id);
+        Option::set($this->MODULE_ID, 'ITSCRIPT_PRODCRT_EVENT_TYPE', $eventName);
+        Option::set($this->MODULE_ID, 'ITSCRIPT_PRODCRT_EVENT_TYPE_EMAIL_TEMPLATE_ID', $id);
 
     }
 
 
     public function UnInstallEventSend() {
-        $eventName = "ITSERW_LOTOSWCR_APPLY_CERT";
+        $eventName = "ITSCRIPT_PRODCRT_APPLY_CERT";
 
         $obEventType = new CEventType;
         $obEventType->Delete($eventName);
 
         $oEventMessage = new CEventMessage();
-        $oEventMessage->Delete(Option::get($this->MODULE_ID, 'ITSERW_LOTOSWCR_EVENT_TYPE_EMAIL_TEMPLATE_ID'));
+        $oEventMessage->Delete(Option::get($this->MODULE_ID, 'ITSCRIPT_PRODCRT_EVENT_TYPE_EMAIL_TEMPLATE_ID'));
 
     }
 
@@ -258,10 +258,10 @@ class itserw_lotoswcr extends CModule
     	if (!Loader::includeModule($module_id)) {
 			\CAdminMessage::ShowMessage(
                 [
-					"MESSAGE" => GetMessage("ITSERW_LOTOSWCR_CHECK_ISS_MODULE_EXT_ERROR",
+					"MESSAGE" => GetMessage("ITSCRIPT_PRODCRT_CHECK_ISS_MODULE_EXT_ERROR",
 						["#MODULE_ID#" => $module_id]
 					),
-					"DETAILS" => GetMessage("ITSERW_LOTOSWCR_CHECK_ISS_MODULE_EXT_ERROR_ALT",
+					"DETAILS" => GetMessage("ITSCRIPT_PRODCRT_CHECK_ISS_MODULE_EXT_ERROR_ALT",
 						["#MODULE_ID#" => $module_id]
 					),
 					"HTML" => true,
@@ -301,7 +301,7 @@ class itserw_lotoswcr extends CModule
         if ($step < 2) {
 
             $APPLICATION->IncludeAdminFile(
-                GetMessage('ITSERW_LOTOSWCR_UNINSTALL_TITLE'),
+                GetMessage('ITSCRIPT_PRODCRT_UNINSTALL_TITLE'),
                 $this->GetPath() . '/install/unstep1.php'
             );
 
@@ -322,10 +322,10 @@ class itserw_lotoswcr extends CModule
         return [
             "reference_id" => array("D", "K", "S", "W"),
             "reference" => [
-                "[D] " . Loc::getMessage("ITSERW_LOTOSWCR_DENIED"),
-                "[K] " . Loc::getMessage("ITSERW_LOTOSWCR_READ_COMPONENT"),
-                "[S] " . Loc::getMessage("ITSERW_LOTOSWCR_WRITE_SETTINGS"),
-                "[W] " . Loc::getMessage("ITSERW_LOTOSWCR_FULL")
+                "[D] " . Loc::getMessage("ITSCRIPT_PRODCRT_DENIED"),
+                "[K] " . Loc::getMessage("ITSCRIPT_PRODCRT_READ_COMPONENT"),
+                "[S] " . Loc::getMessage("ITSCRIPT_PRODCRT_WRITE_SETTINGS"),
+                "[W] " . Loc::getMessage("ITSCRIPT_PRODCRT_FULL")
             ]
         ];
     }

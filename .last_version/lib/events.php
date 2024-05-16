@@ -1,16 +1,16 @@
 <?php
-namespace Itserw\Lotoswcr;
+namespace Itscript\Prodcrt;
 
 use Exception;
 use Bitrix\Main;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc as Loc;
 use Bitrix\Main\Config\Option;
-use Itserw\Lotoswcr\CertTable;
+use Itscript\Prodcrt\CertTable;
 
 abstract class Events 
 {
-    protected static $moduleId = 'itserw.lotoswcr';
+    protected static $moduleId = 'itscript.prodcrt';
 
     public static function OnAfterCertApplyHandler(int $id, array $fields) {
         
@@ -30,8 +30,8 @@ abstract class Events
 
         if ($cert['ACTIVE']=='Y' && intval($cert['FILE_ID'])>0 && $cert['SENDED']!='Y') {
 
-            $eventName =  Option::get(self::$moduleId, 'ITSERW_LOTOSWCR_EVENT_TYPE');
-            $eventTplId = Option::get(self::$moduleId, 'ITSERW_LOTOSWCR_EVENT_TYPE_EMAIL_TEMPLATE_ID');
+            $eventName =  Option::get(self::$moduleId, 'ITSCRIPT_PRODCRT_EVENT_TYPE');
+            $eventTplId = Option::get(self::$moduleId, 'ITSCRIPT_PRODCRT_EVENT_TYPE_EMAIL_TEMPLATE_ID');
 
             if (!empty($eventName) && $eventTplId) {
             

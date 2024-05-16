@@ -70,7 +70,7 @@ $(document).ready(function(){
         let filedsObject = $("#wcr-form-js").serializeObject();
         filedsObject.URL = document.location.href;
 
-        BX.ajax.runAction('itserw:lotoswcr.Cert.add', {
+        BX.ajax.runAction('itscript:prodcrt.Cert.add', {
             data: {
                 fields: filedsObject
             }
@@ -112,7 +112,7 @@ $(document).ready(function(){
         var re = /^[0-9]+?$/;
 		if (!re.test(id)) return;
 
-        BX.ajax.runAction('itserw:lotoswcr.Order.get', {
+        BX.ajax.runAction('itscript:prodcrt.Order.get', {
             data: {
                 id: id
             }

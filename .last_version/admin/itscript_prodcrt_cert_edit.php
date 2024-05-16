@@ -9,10 +9,10 @@ use Bitrix\Main\Application;
 use Bitrix\Main\UI\PageNavigation;
 use Bitrix\Main\Type\DateTime;
 use Bitrix\Main\Engine\CurrentUser;
-use Itserw\Lotoswcr\CertTable;
-use Itserw\Lotoswcr\Util;
+use Itscript\Prodcrt\CertTable;
+use Itscript\Prodcrt\Util;
 
-$module_id = "itserw.lotoswcr";
+$module_id = "itscript.prodcrt";
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_admin_before.php');
 require_once(dirname(__FILE__)."/../include.php");
@@ -25,13 +25,13 @@ $FORM_RIGHT = $APPLICATION->GetGroupRight($module_id);
 if($FORM_RIGHT<="D") $APPLICATION->AuthForm(Loc::getMessage("ACCESS_DENIED"));
 
 if(!Loader::includeModule($module_id)){
-	CAdminMessage::ShowMessage(Loc::getMessage("ITSERW_LOTOSWCR_INCLUDE_MODULE_ERROR", ['#MODULE_ID#' => $module_id]));
+	CAdminMessage::ShowMessage(Loc::getMessage("ITSCRIPT_PRODCRT_INCLUDE_MODULE_ERROR", ['#MODULE_ID#' => $module_id]));
 }
 
-$adminListTableID = 'b_itserw_lotoswcr_cert';
+$adminListTableID = 'b_itscript_prodcrt_cert';
 
 $selfFolderUrl = $adminPage->getSelfFolderUrl();
-$listUrl = $selfFolderUrl . "itserw_lotoswcr_cert_list.php?lang=" . LANGUAGE_ID;
+$listUrl = $selfFolderUrl . "itscript_prodcrt_cert_list.php?lang=" . LANGUAGE_ID;
 $listUrl = $adminSidePanelHelper->editUrlToPublicPage($listUrl);
 
 $request = Main\Context::getCurrent()->getRequest();
@@ -40,9 +40,9 @@ $prefix = '';
 $aTabs = array(
     array(
         "DIV" => "edit1",
-        "TAB" => Loc::getMessage("ITSERW_LOTOSWCR_TITLE"),
-        "ICON" => "lotoswcr_form",
-        "TITLE" => Loc::getMessage("ITSERW_LOTOSWCR_TITLE"),
+        "TAB" => Loc::getMessage("ITSCRIPT_PRODCRT_TITLE"),
+        "ICON" => "prodcrt_form",
+        "TITLE" => Loc::getMessage("ITSCRIPT_PRODCRT_TITLE"),
     ),
 );
 
@@ -145,7 +145,7 @@ if (check_bitrix_sessid()
             $eventID = $result->getId();
 
         if ((string)$request->getPost('apply') != '') {
-            $applyUrl = $selfFolderUrl . 'itserw_lotoswcr_cert_edit.php?lang=' . LANGUAGE_ID . '&ID=' . $eventID . '&' . $tabControl->ActiveTabParam();
+            $applyUrl = $selfFolderUrl . 'itscript_prodcrt_cert_edit.php?lang=' . LANGUAGE_ID . '&ID=' . $eventID . '&' . $tabControl->ActiveTabParam();
             LocalRedirect($applyUrl);
         } else {
             LocalRedirect($listUrl);
@@ -156,15 +156,15 @@ if (check_bitrix_sessid()
 }
 $APPLICATION->SetTitle(
     $eventID == 0
-        ? Loc::getMessage("ITSERW_LOTOSWCR_ADD")
+        ? Loc::getMessage("ITSCRIPT_PRODCRT_ADD")
         : (
     !$copy
-        ? Loc::getMessage('ITSERW_LOTOSWCR_EDIT', array('#ID#' => $eventID))
-        : Loc::getMessage('ITSERW_LOTOSWCR_FORM_EDIT_COPY', array('#ID#' => $eventID))
+        ? Loc::getMessage('ITSCRIPT_PRODCRT_EDIT', array('#ID#' => $eventID))
+        : Loc::getMessage('ITSCRIPT_PRODCRT_FORM_EDIT_COPY', array('#ID#' => $eventID))
     )
 );
 
-$APPLICATION->SetTitle(Loc::getMessage("ITSERW_LOTOSWCR_PAGE_TITLE"));
+$APPLICATION->SetTitle(Loc::getMessage("ITSCRIPT_PRODCRT_PAGE_TITLE"));
 
 require($_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_admin_after.php'); ?>
 
@@ -172,32 +172,32 @@ require($_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_admin_a
 $contextMenuItems = array(
     array(
         'ICON' => 'btn_list',
-        'TEXT' => Loc::getMessage("ITSERW_LOTOSWCR_LIST"),
+        'TEXT' => Loc::getMessage("ITSCRIPT_PRODCRT_LIST"),
         'LINK' => $listUrl
     )
 );
 
 if (!$readOnly && $eventID > 0) {
     if (!$copy) {
-        $addUrl = $selfFolderUrl . "itserw_lotoswcr_cert_edit.php?lang=" . LANGUAGE_ID;
+        $addUrl = $selfFolderUrl . "itscript_prodcrt_cert_edit.php?lang=" . LANGUAGE_ID;
         $addUrl = $adminSidePanelHelper->editUrlToPublicPage($addUrl);
         if (!$adminSidePanelHelper->isPublicFrame())
             $addUrl = $adminSidePanelHelper->setDefaultQueryParams($addUrl);
         $contextMenuItems[] = array(
             'ICON' => 'btn_new',
-            'TEXT' => Loc::getMessage("ITSERW_LOTOSWCR_ADD"),
+            'TEXT' => Loc::getMessage("ITSCRIPT_PRODCRT_ADD"),
             'LINK' => $addUrl
         );
-        $copyUrl = $selfFolderUrl . "itserw_lotoswcr_cert_edit.php?lang=" . LANGUAGE_ID . "&ID=" . $eventID . "&action=copy";
+        $copyUrl = $selfFolderUrl . "itscript_prodcrt_cert_edit.php?lang=" . LANGUAGE_ID . "&ID=" . $eventID . "&action=copy";
         $copyUrl = $adminSidePanelHelper->editUrlToPublicPage($copyUrl);
         if (!$adminSidePanelHelper->isPublicFrame())
             $copyUrl = $adminSidePanelHelper->setDefaultQueryParams($copyUrl);
         $contextMenuItems[] = array(
             'ICON' => 'btn_copy',
-            'TEXT' => Loc::getMessage("ITSERW_LOTOSWCR_EDIT"),
+            'TEXT' => Loc::getMessage("ITSCRIPT_PRODCRT_EDIT"),
             'LINK' => $copyUrl
         );
-        $deleteUrl = $selfFolderUrl . "itserw_lotoswcr_cert_list.php?lang=" . LANGUAGE_ID . "&ID=" . $eventID . "&action=delete&" . bitrix_sessid_get();
+        $deleteUrl = $selfFolderUrl . "itscript_prodcrt_cert_list.php?lang=" . LANGUAGE_ID . "&ID=" . $eventID . "&action=delete&" . bitrix_sessid_get();
         $buttonAction = "LINK";
         if ($adminSidePanelHelper->isPublicFrame()) {
             $deleteUrl = $adminSidePanelHelper->editUrlToPublicPage($deleteUrl);
@@ -205,8 +205,8 @@ if (!$readOnly && $eventID > 0) {
         }
         $contextMenuItems[] = array(
             'ICON' => 'btn_delete',
-            'TEXT' => Loc::getMessage("ITSERW_LOTOSWCR_DELETE"),
-            $buttonAction => "javascript:if(confirm('" . CUtil::JSEscape(Loc::getMessage("ITSERW_LOTOSWCR_DELETE_ALERT")) . "')) top.window.location.href='" . $deleteUrl . "';",
+            'TEXT' => Loc::getMessage("ITSCRIPT_PRODCRT_DELETE"),
+            $buttonAction => "javascript:if(confirm('" . CUtil::JSEscape(Loc::getMessage("ITSCRIPT_PRODCRT_DELETE_ALERT")) . "')) top.window.location.href='" . $deleteUrl . "';",
             'WARNING' => 'Y',
         );
     }
@@ -228,7 +228,7 @@ if (!empty($errors)) {
         array(
             'DETAILS' => implode('<br>', $errors),
             'TYPE' => 'ERROR',
-            'MESSAGE' => Loc::getMessage("ITSERW_LOTOSWCR_FORM_EDIT_ERROR_SAVE"),
+            'MESSAGE' => Loc::getMessage("ITSCRIPT_PRODCRT_FORM_EDIT_ERROR_SAVE"),
             'HTML' => true
         )
     );
@@ -259,7 +259,7 @@ if (!empty($returnUrl)) { ?>
 echo bitrix_sessid_post();
 $tabControl->EndEpilogContent();
 
-$eventActionUrl = $selfFolderUrl . 'itserw_lotoswcr_cert_edit.php?lang=' . LANGUAGE_ID;
+$eventActionUrl = $selfFolderUrl . 'itscript_prodcrt_cert_edit.php?lang=' . LANGUAGE_ID;
 $eventActionUrl = $adminSidePanelHelper->setDefaultQueryParams($eventActionUrl);
 
 $tabControl->Begin(["FORM_ACTION" => $eventActionUrl]);
@@ -270,7 +270,7 @@ if ($eventID > 0 && !$copy) {
     $tabControl->AddViewField($prefix . 'ID', 'ID', $eventID, false);
 }
 $tabControl->AddCheckBoxField("ACTIVE",
-    Loc::getMessage("ITSERW_LOTOSWCR_TITLE_ACTIVE").":",
+    Loc::getMessage("ITSCRIPT_PRODCRT_TITLE_ACTIVE").":",
     false, array("Y", "N"),
     ($event['ACTIVE'] == "Y" || $fields['ACTIVE'] == "Y")
 );
@@ -281,7 +281,7 @@ $tabControl->AddCheckBoxField("ACTIVE",
 
 // is add new
 if (!$eventID) {
-    $tabControl->BeginCustomField('ORDER_ID', Loc::getMessage("ITSERW_LOTOSWCR_TITLE_ORDER_ID"), true);
+    $tabControl->BeginCustomField('ORDER_ID', Loc::getMessage("ITSCRIPT_PRODCRT_TITLE_ORDER_ID"), true);
     ?>
       <tr id="tr_ORDER_ID">
           <td class="adm-detail-content-cell-l"><?=$tabControl->GetCustomLabelHTML();?></td>
@@ -292,7 +292,7 @@ if (!$eventID) {
       <?
     $tabControl->EndCustomField('ORDER_ID', '');
 
-    $tabControl->BeginCustomField('USER_ID', Loc::getMessage("ITSERW_LOTOSWCR_TITLE_USER_ID"), true);
+    $tabControl->BeginCustomField('USER_ID', Loc::getMessage("ITSCRIPT_PRODCRT_TITLE_USER_ID"), true);
     ?>
       <tr id="tr_USER_ID">
           <td class="adm-detail-content-cell-l"><?=$tabControl->GetCustomLabelHTML();?></td>
@@ -309,7 +309,7 @@ if (!$eventID) {
 //echo "<br/><br/><br/>";
 
 foreach ($allFields as $fld => $type) {
-    $tabControl->BeginCustomField($fld, Loc::getMessage("ITSERW_LOTOSWCR_FIELD_TITLE_" . $fld), false);
+    $tabControl->BeginCustomField($fld, Loc::getMessage("ITSCRIPT_PRODCRT_FIELD_TITLE_" . $fld), false);
     ?>
     <tr id="tr_<?=$fld?>">
         <td class="adm-detail-content-cell-l"><?=$tabControl->GetCustomLabelHTML(); ?></td>

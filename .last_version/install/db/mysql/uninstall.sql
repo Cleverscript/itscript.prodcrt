@@ -1,1 +1,1 @@
-DROP TABLE if exists `b_itserw_lotoswcr_cert`;
+DROP TABLE if exists `b_itscript_prodcrt_cert`;

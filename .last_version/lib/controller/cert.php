@@ -1,5 +1,5 @@
 <?php
-namespace Itserw\Lotoswcr\Controller;
+namespace Itscript\Prodcrt\Controller;
 
 use Bitrix\Main\Error;
 use Bitrix\Main\Loader;
@@ -9,11 +9,11 @@ use Bitrix\Main\Engine\ActionFilter\Authentication;
 use Bitrix\Main\Engine\ActionFilter\Csrf;
 use Bitrix\Main\Engine\ActionFilter\Base;
 use Bitrix\Main\Engine\CurrentUser;
-use Itserw\Lotoswcr\CertTable;
-use Itserw\Lotoswcr\Util;
+use Itscript\Prodcrt\CertTable;
+use Itscript\Prodcrt\Util;
 use Bitrix\Sale\Order;
 
-Loader::includeModule('itserw.lotoswcr');
+Loader::includeModule('itscript.prodcrt');
 Loader::includeModule('sale');
 
 class Cert extends Controller

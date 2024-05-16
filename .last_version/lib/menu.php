@@ -1,6 +1,6 @@
 <?php
 
-namespace Itserw\Lotoswcr;
+namespace Itscript\Prodcrt;
 
 use Bitrix\Main\Localization\Loc;
 
@@ -14,12 +14,12 @@ class Menu
     public static function adminOnBuildGlobalMenu(&$arGlobalMenu, &$arModuleMenu) //&$arGlobalMenu, &$arModuleMenu
     {
 		//add css icon menu
-        $arGlobalMenu['global_itserw'] = [
-            'menu_id' => 'global_itserw',
-            'text' => 'Itserw',
-            'title' => 'Itserw',
+        $arGlobalMenu['global_itscript'] = [
+            'menu_id' => 'global_itscript',
+            'text' => 'itscript',
+            'title' => 'itscript',
             'sort' => 100,
-            'items_id' => 'global_itserw',
+            'items_id' => 'global_itscript',
             'items' => [
             ]
         ];  

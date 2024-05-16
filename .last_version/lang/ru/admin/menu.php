@@ -1,5 +1,5 @@
 <?php
-$MESS["ITSERW_LOTOSWCR_MENU_ROOT_NAME"] = "Сертификаты";
-$MESS["ITSERW_LOTOSWCR_MENU"] = "Заявки";
+$MESS["ITSCRIPT_PRODCRT_MENU_ROOT_NAME"] = "Сертификаты";
+$MESS["ITSCRIPT_PRODCRT_MENU"] = "Заявки";
 $MESS[""] = "";
 $MESS[""] = "";
