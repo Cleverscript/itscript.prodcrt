@@ -18,31 +18,15 @@ IncludeModuleLangFile(__FILE__);
 
 class Order extends Controller
 {
-    /*public function configureActions(): array
+    public function configureActions(): array
     {
-        return [
-            //Название вашего Action
-            'add' => [
-                //Отключение фильтра
-                '-prefilters' => [
-                    ActionFilter\Authentication::class,
-                ],
-                //Включение фильтра                
-                'prefilters' => [
-                    ActionFilter\Csrf::class,
-                ],
-            ],
-        ];
-    }*/
+        return [];
+    }
 
 	public function getAction(int $id):? array
 	{
 
         $order = \Bitrix\Sale\Order::load($id);
-
-        //echo '<pre>';
-        //var_dump($cert);
-        //echo '</pre>';
 
 		if (!$order) {
 			$this->addError(new Error(
@@ -67,9 +51,6 @@ class Order extends Controller
 
 			return null;
 		}
-
-
-        //$order->getId();
 
 		return $order->toArray();
 	}

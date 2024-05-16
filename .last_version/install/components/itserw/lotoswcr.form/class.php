@@ -11,7 +11,7 @@ use Itserw\Lotoswcr\Util;
 
 Loader::includeModule('itserw.lotoswcr');
 
-class Lotoswcr extends CBitrixComponent
+class LotoswcrForm extends CBitrixComponent
 {
 	public function onPrepareComponentParams($arParams) {
 
@@ -30,58 +30,51 @@ class Lotoswcr extends CBitrixComponent
 	}
 
 	public function executeComponent() {
+   
+        // add assets
+        $template = $this->getTemplateName() ?: '.default';
+        Asset::getInstance()->addCss($this->GetPath() . '/templates/' . $template . '/style.css');
+        Asset::getInstance()->addJs($this->GetPath().'/templates/'. $template . '/js/script.js');
 
-		//if ($this->startResultCache(false, array(($this->arParams["CACHE_GROUPS"]==="N"? false: CurrentUser::get()->getUserGroups())))) {
-	        
-            // add assets
+        // Create navigation
+        $nav = new PageNavigation("nav");
+        $nav->allowAllRecords(false)
+            ->setPageSize($this->arParams['LIMIT'])
+            ->initFromUri();
 
-            //var_dump($this->getTemplateName());
+        $filter = [];
+        if ($this->arParams['USE_PREMODERATION'] == 'Y') {
+            $filter['ACTIVE'] = 'Y';
+        }
 
-            Asset::getInstance()->addCss($this->GetPath() . '/templates/' . $this->getTemplateName() . '/style.css');
-            Asset::getInstance()->addJs($this->GetPath().'/templates/'. $this->getTemplateName() . '/js/script.js');
+        // Get ORM entity
+        $questions = CertTable::getList([
+            'select' => [
+                '*'
+            ],
+            'filter' => $filter,
+            'order' => ['ID' => 'DESC'],
+            'offset' => $nav->getOffset(),
+            'limit' => $nav->getLimit(),
+            'count_total' => true
+        ]);
 
-            // Create navigation
-            $nav = new PageNavigation("nav");
-            $nav->allowAllRecords(false)
-                ->setPageSize($this->arParams['LIMIT'])
-                ->initFromUri();
+        // Set full count elements entity
+        $nav->setRecordCount($questions->getCount());
 
-            $filter = [];
-            if ($this->arParams['USE_PREMODERATION'] == 'Y') {
-                $filter['ACTIVE'] = 'Y';
-            }
+        // Fetch all items per page
+        $rows  = $questions->fetchAll();
 
-            // Get ORM entity
-            $questions = CertTable::getList([
-                'select' => [
-                    '*'
-                ],
-                'filter' => $filter,
-                'order' => ['ID' => 'DESC'],
-                'offset' => $nav->getOffset(),
-                'limit' => $nav->getLimit(),
-                'count_total' => true
-            ]);
+        //Util::debug($rows);
 
-            // Set full count elements entity
-            $nav->setRecordCount($questions->getCount());
+        $this->arResult["ITEMS"] = $rows;
+        $this->arResult['NAV'] = $nav;
 
-            // Fetch all items per page
-            $rows  = $questions->fetchAll();
+        // Save data cache
+        $this->SetResultCacheKeys(['ITEMS', 'NAV']);
 
-            //Util::debug($rows);
+        // Include template
+        $this->includeComponentTemplate();
 
-            $this->arResult["ITEMS"] = $rows;
-            $this->arResult['NAV'] = $nav;
-
-            // Save data cache
-            $this->SetResultCacheKeys(['ITEMS', 'NAV']);
-
-            // Include template
-            $this->includeComponentTemplate();
-
-	    //} else {
-            //$this->abortResultCache();
-        //}
 	}
 }

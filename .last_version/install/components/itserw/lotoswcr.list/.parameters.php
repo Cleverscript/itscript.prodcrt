@@ -12,6 +12,12 @@ $arComponentParameters = [
 			"TYPE" => "STRING",
 			"DEFAULT" => "20",
 		],
+		"SET_TITLE" => [
+			"PARENT" => "BASE",
+			"NAME" => GetMessage("T_SET_TITLE"),
+			"TYPE" => "CHECKBOX",
+			"DEFAULT" => "Y",
+		],
 
 		"CACHE_TIME"  =>  ["DEFAULT"=>36000000],
 		"CACHE_GROUPS" => [

@@ -1,7 +1,7 @@
 <div class="wcr-list-over">
-<?php if (!empty($arResult['ITEMS'])): ?>
-
-        <? if(count($arResult['ITEMS'])): ?>
+    <h5><?=getMessage('T_WCR_CERT_LIST_TITLE');?></h5>
+    <?php if (!empty($arResult['ITEMS'])): ?>
+        <?php if (count($arResult['ITEMS'])): ?>
         <ul>
             <?php foreach($arResult['ITEMS'] as $key => $order): ?>
             <li>
@@ -15,9 +15,9 @@
             
                 <?php foreach($order['CERTS'] as $cert): ?>
                     <br/>
-                <a href="<?=$cert['FILE_SRC'];?>" target="_blank">
-                    <?=getMessage('T_CERT_DOWN', ['#ID#' => $cert['ID']]);?>
-                </a>
+                    <a href="<?=$cert['FILE_SRC'];?>" target="_blank">
+                        <?=getMessage('T_CERT_DOWN', ['#ID#' => $cert['ID']]);?>
+                    </a>
                 <?php endforeach; ?> 
             </li>    
             <?php endforeach; ?>    

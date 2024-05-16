@@ -121,6 +121,9 @@ class itserw_lotoswcr extends CModule
         );
 
         Directory::deleteDirectory(
+            $_SERVER["DOCUMENT_ROOT"] . '/bitrix/components/' . $this->getVendor() . '/lotoswcr.list'
+        );
+        Directory::deleteDirectory(
             $_SERVER["DOCUMENT_ROOT"] . '/bitrix/components/' . $this->getVendor() . '/lotoswcr.form'
         );
 

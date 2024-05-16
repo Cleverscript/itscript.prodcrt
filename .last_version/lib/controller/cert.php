@@ -5,7 +5,9 @@ use Bitrix\Main\Error;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Engine\Controller;
-use Bitrix\Main\Engine\ActionFilter;
+use Bitrix\Main\Engine\ActionFilter\Authentication;
+use Bitrix\Main\Engine\ActionFilter\Csrf;
+use Bitrix\Main\Engine\ActionFilter\Base;
 use Bitrix\Main\Engine\CurrentUser;
 use Itserw\Lotoswcr\CertTable;
 use Itserw\Lotoswcr\Util;
@@ -16,22 +18,10 @@ Loader::includeModule('sale');
 
 class Cert extends Controller
 {
-    /*public function configureActions(): array
+    public function configureActions(): array
     {
-        return [
-            //Название вашего Action
-            'add' => [
-                //Отключение фильтра
-                '-prefilters' => [
-                    ActionFilter\Authentication::class,
-                ],
-                //Включение фильтра                
-                'prefilters' => [
-                    ActionFilter\Csrf::class,
-                ],
-            ],
-        ];
-    }*/
+        return [];
+    }
 
 	public function addAction(array $fields):? array
 	{
@@ -110,12 +100,7 @@ class Cert extends Controller
 
 	public function viewAction(int $id):? array
 	{
-
         $cert = CertTable::getByPrimary($id)->fetchObject();
-
-        //echo '<pre>';
-        //var_dump($cert);
-        //echo '</pre>';
 
 		if (!$cert)
 		{
@@ -126,6 +111,4 @@ class Cert extends Controller
 
 		return $cert->toArray();
 	}
-
-
 }

@@ -14,7 +14,7 @@ Loader::includeModule('itserw.lotoswcr');
 
 IncludeTemplateLangFile(__FILE__);
 
-class Lotoswcr extends CBitrixComponent
+class LotoswcrList extends CBitrixComponent
 {
 	public function onPrepareComponentParams($arParams) {
 
@@ -26,6 +26,8 @@ class Lotoswcr extends CBitrixComponent
 			"CACHE_TYPE" => $arParams["CACHE_TYPE"],
 			"CACHE_TIME" => isset($arParams["CACHE_TIME"])? $arParams["CACHE_TIME"]: 36000000,
         ];
+
+        $arParams['LIMIT'] = $arParams['LIMIT'] ?: 20;
 
         $result = $result+$arParams;
 
@@ -39,12 +41,11 @@ class Lotoswcr extends CBitrixComponent
 		if ($this->startResultCache(false, array(($this->arParams["CACHE_GROUPS"]==="N"? false: $userId)))) {
 	        
             $items = [];
+
             // add assets
-
-            //var_dump($this->getTemplateName());
-
-            Asset::getInstance()->addCss($this->GetPath() . '/templates/' . $this->getTemplateName() . '/style.css');
-            Asset::getInstance()->addJs($this->GetPath().'/templates/'. $this->getTemplateName() . '/js/script.js');
+            $template = $this->getTemplateName() ?: '.default';
+            Asset::getInstance()->addCss($this->GetPath() . '/templates/' . $template . '/style.css');
+            Asset::getInstance()->addJs($this->GetPath().'/templates/'. $template . '/js/script.js');
 
             // Create navigation
             $nav = new PageNavigation("nav");
@@ -57,8 +58,6 @@ class Lotoswcr extends CBitrixComponent
                 'USER_ID' => $userId,
                 '!=FILE_ID' => null
             ];
-
-            
 
             // Get ORM entity
             $cert = CertTable::getList([
@@ -99,7 +98,9 @@ class Lotoswcr extends CBitrixComponent
             $this->abortResultCache();
         }
 
-        global $APPLICATION;
-        $APPLICATION->SetTitle(Loc::getMessage('T_PAGE_TITLE'));
+        if ($this->arParams['SET_TITLE']=='Y') {
+            global $APPLICATION;
+            $APPLICATION->SetTitle(Loc::getMessage('T_PAGE_TITLE'));
+        }
 	}
 }

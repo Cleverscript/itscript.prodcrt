@@ -1,18 +1,13 @@
 
 <div class="wcr-form-over">
-    
-    <? /*
-    <button id="wcr-add-btn-js" class="btn btn-primary wcr-add-btn">
-        <?=GetMessage("T_QUESTION_ADD");?>
-    </button>*/ ?>
-
+    <h5><?=GetMessage("T_FORM_NAME");?></h5>
     <div id="wcr-form-over-js" class="wcr-form">
         <div id="wcr-form-js-alert" class="wcr-form-alert"></div>
         <form id="wcr-form-js" action="" method="POST">
             <?=bitrix_sessid_post();?>
             <div class="over-field">
 
-                <input id="order-id-js" type="text" class="form-control" name="ORDER_ID" value="<?=$_POST['ORDER_ID'] ?? null;?>" placeholder="<?=GetMessage("T_QUESTION_FIELD_LABEL");?>"/>
+                <input id="order-id-js" type="text" class="form-control" name="ORDER_ID" value="<?=$_POST['ORDER_ID'] ?? null;?>" placeholder="<?=GetMessage("T_WCR_FIELD_LABEL");?>"/>
 
                 <hr/>
 
