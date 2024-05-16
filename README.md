@@ -1,4 +1,4 @@
-# Q&A - модуль "Вопрос - ответ" для 1C-Bitrix
+# Prodcert - модуль "Регистрация гарантийных сертификатов" для 1C-Bitrix
 
 ---
 
@@ -52,5 +52,5 @@
 
 ![Иллюстрация к проекту](https://github.com/Cleverscript/itscript.prodcrt/raw/main/1.png)
 ![Иллюстрация к проекту](https://github.com/Cleverscript/itscript.prodcrt/raw/main/2.png)
-![Иллюстрация к проекту](https://github.com/Cleverscript/itscript.prodcrt/raw/main/3.png)
-![Иллюстрация к проекту](https://github.com/Cleverscript/itscript.prodcrt/raw/main/4.png)
+![Иллюстрация к проекту](https://github.com/Cleverscript/itscript.prodcrt/raw/main/32.png)
+![Иллюстрация к проекту](https://github.com/Cleverscript/itscript.prodcrt/raw/main/42.png)
