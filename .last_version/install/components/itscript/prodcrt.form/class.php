@@ -13,7 +13,8 @@ Loader::includeModule('itscript.prodcrt');
 
 class ProdcrtForm extends CBitrixComponent
 {
-	public function onPrepareComponentParams($arParams) {
+	public function onPrepareComponentParams($arParams) 
+    {
 
         /*echo '<pre>';
         print_r($arParams);
@@ -29,8 +30,8 @@ class ProdcrtForm extends CBitrixComponent
 		return $result;
 	}
 
-	public function executeComponent() {
-   
+	public function executeComponent() 
+    {
         // add assets
         $template = $this->getTemplateName() ?: '.default';
         Asset::getInstance()->addCss($this->GetPath() . '/templates/' . $template . '/style.css');
@@ -59,6 +60,10 @@ class ProdcrtForm extends CBitrixComponent
             'count_total' => true
         ]);
 
+        if(!$questions->getCount()) {
+            $this->abortResultCache();
+        }
+
         // Set full count elements entity
         $nav->setRecordCount($questions->getCount());
 
@@ -75,6 +80,5 @@ class ProdcrtForm extends CBitrixComponent
 
         // Include template
         $this->includeComponentTemplate();
-
 	}
 }

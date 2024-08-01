@@ -16,7 +16,8 @@ IncludeTemplateLangFile(__FILE__);
 
 class ProdcrtList extends CBitrixComponent
 {
-	public function onPrepareComponentParams($arParams) {
+	public function onPrepareComponentParams($arParams) 
+    {
 
 		$result = [
 			"CACHE_TYPE" => $arParams["CACHE_TYPE"],
@@ -30,7 +31,8 @@ class ProdcrtList extends CBitrixComponent
 		return $result;
 	}
 
-	public function executeComponent() {
+	public function executeComponent() 
+    {
 
         $userId = \Bitrix\Main\Engine\CurrentUser::get()->getId();
 
@@ -66,6 +68,10 @@ class ProdcrtList extends CBitrixComponent
                 'count_total' => true
             ]);
 
+            if (!$cert->getCount()) {
+                $this->abortResultCache();
+            }
+
             // Set full count elements entity
             $nav->setRecordCount($cert->getCount());
 
@@ -84,13 +90,10 @@ class ProdcrtList extends CBitrixComponent
 
             // Save data cache
             $this->SetResultCacheKeys(['ITEMS', 'NAV']);
+	    }
 
-            // Include template
-            $this->includeComponentTemplate();
-
-	    } else {
-            $this->abortResultCache();
-        }
+        // Include template
+        $this->includeComponentTemplate();
 
         if ($this->arParams['SET_TITLE']=='Y') {
             global $APPLICATION;
