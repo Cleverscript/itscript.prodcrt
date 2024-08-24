@@ -53,10 +53,6 @@ abstract class Events
                     CertTable::update($id, ['SENDED' => 'Y']);
                 }
             }
-
-           // exit();
-
-            \Bitrix\Main\Diag\Debug::writeToFile([$id, $fields, $cert, 'SEND' => $send]);
         }
     }
 }
